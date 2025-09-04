@@ -1,0 +1,162 @@
+body {
+  background: linear-gradient(-135deg, #fefce8 0%, #f5efe3 100%);
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.formpage {
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1rem;
+}
+
+.formheader {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.formheadertitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  margin-top: 3rem;
+}
+
+.formheaderimg {
+  width: 16rem;
+  height: 9.5rem;
+}
+
+.formtitle {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.formdescription {
+  color: #4b5563;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.formcard {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  border: 1px solid #e5e5e5;
+  margin-bottom: 2rem;
+}
+
+.formcontentcontainer {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.prueba {
+  padding-top: 0.75rem;
+  padding-bottom: 1.75rem;
+  font-size: 1rem;
+  color: #e07706;
+}
+
+.ant-form-item-label>label {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.pruebacheckboxlabel {
+  margin-bottom: 24px;
+}
+
+.pruebaerror {
+  color: #1f1f1f;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.prueba2 {
+  padding-top: 0.75rem;
+  font-size: 1rem;
+  color: #e07706;
+}
+
+.description {
+  color: gray;
+  padding-bottom: 1.5rem;
+}
+
+.conditions {
+  color: #1f1f1f;
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+  line-height: 2.2;
+}
+
+.datepicker {
+  width: 100%;
+}
+
+.signaturecontainer {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 5px;
+  background-color: white;
+  width: fit-content;
+}
+
+.signature-canvas {
+  border: none;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+button.cleanbutton {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.4rem 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.375rem;
+  border: 1px solid #e5e0cf;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+button.cleanbutton:hover {
+  color: #dd7706;
+  background-color: #fff9e6;
+}
+
+.submitButton.ant-btn {
+  background: linear-gradient(135deg, #fdd01a 0%, #f59e0b 100%) !important;
+  color: black !important;
+  font-size: 1.125rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: none !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Puedes quitarlo si quieres menos sombra */
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  height: auto;
+  line-height: 1;
+}
+.submitButton.ant-btn > span {
+  color: black !important;
+}
+.submitButton.ant-btn:hover {
+  opacity: 0.85;
+}

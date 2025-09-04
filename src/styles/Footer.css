@@ -1,0 +1,133 @@
+.footer{
+  background-color: #111827;
+  color: #ffffff;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.footercontainer{
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (min-width: 640px) {
+  .footercontainer{padding-left: 1.5rem; padding-right: 1.5rem;}
+}
+@media (min-width: 1024px) {
+  .footercontainer{padding-left: 2rem; padding-right: 2rem;}
+}
+
+.footerinfo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+@media (min-width: 1024px){
+  .footerinfo{flex-direction: row;}
+}
+
+.footerleft{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+@media (min-width: 640px){
+  .footerleft{flex-direction: row;}
+}
+@media (min-width: 1024px) {
+  .footerleft{gap: 1.5;}
+}
+
+.footerlogocontainer{
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footerlogo{
+  padding: 0.5rem;
+}
+
+.footerlogoimg{
+  width: 11.5em;
+  height: 6.75rem;
+}
+
+.footercontact{
+  text-align: center;
+}
+@media (min-width: 640px) {
+  .footercontact{text-align: left;}
+}
+
+.footertitle{
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.footercontactinfo{
+  color: #d1d5db;
+}
+.footercontactinfo > * + *{
+  margin-top: .25rem;
+}
+
+.footersubtitle{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+@media (min-width: 640px){
+  .footersubtitle{justify-content: flex-start;}
+}
+
+.footerright{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+@media (min-width: 1024px) {
+  .footerright{align-items: flex-end;}
+}
+
+.footersocialsinfo{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.footersocial{
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border-color: transparent;
+  gap: 0.5rem;
+  color: #d1d5db;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.footersocial:hover{
+  color: #facc15;
+  background-color: #1f2937;
+}
+
+.footersocialicon{
+  width: 1rem;
+  height: 1rem;
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+  bottom: 0.05rem;
+}

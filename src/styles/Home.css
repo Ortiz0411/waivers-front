@@ -1,0 +1,212 @@
+
+
+.section1 {
+  padding: 5rem 1rem;
+}
+
+.container {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+
+.imgcontainer {
+  width: 100%;
+  max-width: 252px;
+  height: auto;
+  margin: 0 auto;
+}
+@media (max-width: 768px) {
+  .imgcontainer {
+    max-width: 200px;
+  }
+}
+@media (max-width: 480px) {
+  .imgcontainer {
+    max-width: 150px;
+  }
+}
+
+
+.rcrlogo {
+  width: 100%;
+  height: auto;
+}
+
+h2 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #1F2937;
+  margin-bottom: 1.5rem;
+}
+
+span {
+  display: block;
+  color: #dc2917;
+}
+
+.p1 {
+  font-size: 1.25rem;
+  color: #4b5563;
+  margin-bottom: 2rem;
+  min-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+}
+
+.empezar {
+  background: linear-gradient(135deg, #fdd01a 0%, #f59e0b 100%);
+  color: black;
+  font-size: 1.125rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.375rem;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 0.95;
+  cursor: pointer;
+}
+
+.empezar:hover {
+  opacity: 0.85;
+}
+
+.escudo {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+  bottom: 0.05rem;
+}
+
+
+
+.cardsection {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.contentcontainer {
+  min-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.titlecontainer {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+h3 {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.p2 {
+  color: #4b5563;
+  min-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cardcontainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-left: 3rem;
+  margin-right: 3rem;
+  gap: 2rem;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  background-color: #ffffff;
+  color: #333333;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-radius: 1rem;
+}
+
+.cardheader {
+  text-align: center;
+  display: grid;
+  grid-template-rows: auto auto;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+.cardnumber {
+  position: absolute;
+  top: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2rem;
+  height: 2rem;
+  background-color: #FFC107;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  font-weight: bold;
+}
+.cardnumber2{background-color: #dc2917; color: white;}
+.cardnumber3{background-color: #00a63e; color: white;}
+
+.cardiconcontainer {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+  width: 4rem;
+  height: 4rem;
+  background-color: #fef3c7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.cardiconcontainer2{background-color: #fecaca;}
+.cardiconcontainer3{background-color: #dbfce7;}
+
+.cardicon {
+  width: 2rem;
+  height: 2rem;
+  color: #d97706;
+}
+.cardicon2{color: #991b1b;}
+.cardicon3{color: #00a63e;}
+
+.cardtitle {
+  color: #eaa006;
+  line-height: 0;
+}
+.cardtitle2{color: #b31b1b;}
+.cardtitle3{color: #0d5454;}
+
+.cardcontent {
+  color: #4b5563;
+  text-align: center;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 1.5rem;
+}
