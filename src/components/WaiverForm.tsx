@@ -3,9 +3,9 @@ import SignatureCanvas from "react-signature-canvas";
 import '../styles/Form.css'
 import { conditions } from '../utils/Conditions.tsx';
 import { useEffect, useRef } from "react";
-import dayjs from "dayjs";
+import dayjs, { Dayjs} from "dayjs";
 
-import { Form, Button, Checkbox, DatePicker, Input, Space, Row, Col, InputNumber } from 'antd';
+import { Form, Button, Checkbox, DatePicker, Input, Space, Row, Col, InputNumber, message } from 'antd';
 
 
 export type WaiverFormData = {
@@ -13,7 +13,7 @@ export type WaiverFormData = {
     under_age?: boolean;
     legal_guardian: string;
     email: string;
-    tour_date: string;
+    tour_date: Dayjs;
 
     alcoholism: boolean;
     claustrophobia: boolean;
@@ -22,7 +22,7 @@ export type WaiverFormData = {
     epilepsy: boolean;
     peptic_ulcers: boolean;
     respiratory_problems: boolean;
-    neck_injury: boolean;
+    neck_injure: boolean;
     back_problems: boolean;
     drug_use: boolean;
     depression: boolean;
@@ -34,13 +34,16 @@ export type WaiverFormData = {
     other_condition: string;
     pregnancy: number;
     medications: string;
-    date_medications: string;
-    date_examination: string;
-    date_xray: string;
+
+    date_medications: Dayjs;
+    date_examination: Dayjs;
+    date_xray: Dayjs;
     other_areas: string;
     signature: string;
+
     ip_address: string;
     user_agent: string;
+
     terms: boolean;
 };
 
@@ -57,12 +60,97 @@ const WaiverForm = () => {
     }
 
 
-
     const isUnderAge = Form.useWatch('under_age', form);
 
-    const onFinish = (values: WaiverFormData) => {
+
+    const onFinish = async (values: WaiverFormData) => {
+
+        try {
+
+            if (!sigCanvasRef.current || sigCanvasRef.current.isEmpty()){
+                message.error('Falta firma')
+                return
+            }
+
+            const signature = sigCanvasRef.current ? sigCanvasRef.current.toDataURL('image/png') : ''
+
+            
+            const legalGuardian = values.under_age && values.legal_guardian ? values.legal_guardian : 'NOT APPLY'
+            const tourDate = values.tour_date ? values.tour_date.format('YYYY-MM-DD') : null
+
+            const personalData = {
+                name: values.name,
+                legal_guardian: legalGuardian,
+                email: values.email,
+                tour_date: tourDate,
+                ip_address: window.location.hostname,
+                user_agent: navigator.userAgent,
+            }
+
+            const medicalConditions = {
+                alcoholism: !!values.alcoholism,
+                claustrophobia: !!values.claustrophobia,
+                dizzines: !!values.dizzines,
+                ear_infection: !!values.ear_infection,
+                epilepsy: !!values.epilepsy,
+                peptic_ulcers: !!values.peptic_ulcers,
+                respiratory_problems: !!values.respiratory_problems,
+                neck_injure: !!values.neck_injure,
+                back_problems: !!values.back_problems,
+                drug_use: !!values.drug_use,
+                depression: !!values.depression,
+                heart_problems: !!values.heart_problems,
+                recent_operation: !!values.recent_operation,
+                headaches: !!values.headaches,
+                overweight: !!values.overweight
+            }
+
+            const medicalDates = {
+                other_condition: values.other_condition || 'NONE',
+                pregnancy: values.pregnancy ?? 0,
+                medications: values.medications || 'NONE',
+                date_medications: values.date_medications ? values.date_medications.format('YYYY-MM-DD') : 'NOT PROVIDED',
+                date_examination: values.date_examination ? values.date_examination.format('YYYY-MM-DD') : 'NOT PROVIDED',
+                date_xray: values.date_xray ? values.date_xray.format('YYYY-MM-DD') : 'NOT PROVIDED',
+                other_areas: values.other_areas || 'NONE'
+            }
+
+            const waiver = {
+                ...personalData,
+                ...medicalConditions,
+                ...medicalDates,
+                signature
+            }
+
+            console.log('Campos: ', waiver)
+
+
+            const response = await fetch(
+                'https://waivers-api.onrender.com/api/waivers',
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(waiver)
+                }
+            )
+
+
+            if (!response.ok) {
+                throw new Error('Error al enviar formulario')
+            }
+
+            message.success('Formulario enviado')
+            form.resetFields()
+            sigCanvasRef.current.clear()
+
+        } catch (err) {
+            console.error(err)
+            message.error('Error al procesar datos')
+        }
+        
         console.log('Submitted:', values);
     };
+
 
     useEffect(() => {
         if (!isUnderAge) {

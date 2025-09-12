@@ -7,7 +7,7 @@ export const conditions = [
     { name: "epilepsy", label: "Epilepsy" },
     { name: "peptic_ulcers", label: "Peptic ulcers" },
     { name: "respiratory_problems", label: "Respiratory problems" },
-    { name: "neck_injury", label: "Neck injury" },
+    { name: "neck_injure", label: "Neck injure" },
     { name: "back_problems", label: "Back problems" },
     { name: "drug_use", label: "Drug use" },
     { name: "depression", label: "Depression" },
