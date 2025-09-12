@@ -1,13 +1,13 @@
 {
   "name": "waivers",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "ts-node-dev src/index.ts",
-    "start": "node build/index.js",
-    "tsc": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@types/react-icons": "^3.0.0",
