@@ -1,4 +1,3 @@
-import React from "react";
 import logo from '../assets/rcrlogo.png';
 import '../styles/Footer.css';
 

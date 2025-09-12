@@ -1,6 +1,6 @@
 import '../styles/Terms.css';
 import Logo from '../assets/rcrlogo.png';
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { FaArrowRight } from "react-icons/fa6";
 import { GoAlert } from "react-icons/go";
 import { useNavigate } from 'react-router-dom';
 

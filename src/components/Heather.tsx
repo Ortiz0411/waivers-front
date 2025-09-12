@@ -1,12 +1,12 @@
-import logo from '../assets/rcrlogo.png';
+//import logo from '../assets/rcrlogo.png';
 import '../styles/Heather.css';
 import { Languajes } from '../utils/Languajes';
 import { CiGlobe } from "react-icons/ci";
 
 
 
-const options = Languajes.map((languaje => ({
-})))
+/*const options = Languajes.map((languaje => ({
+})))*/
 
 
 
