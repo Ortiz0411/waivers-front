@@ -1,59 +1,49 @@
-import logo from '../assets/rcrlogo.png';
-import '../styles/Footer.css';
+import React from "react";
+import logo from "../assets/logo-rcr.png";
+import "../styles/Footer.css";
 
 import { AiOutlineTikTok, AiOutlineGoogle } from "react-icons/ai";
 import { FiFacebook, FiInstagram } from "react-icons/fi";
 
-
-function Footer() {
-
+const Footer: React.FC = () => {
     return (
+        <footer className="footer">
+            <div className="footer-container">
+                <div className="footer-content">
 
-        <div className='footer'>
-            <div className='footercontainer'>
-                <div className='footerinfo'>
-
-
-                    {/**  Parte izquierda  */}
-                    <div className='footerleft'>
-
-                        {/**  Logo  */}
-                        <div className='footerlogocontainer'>
-                            <div className='footerlogo'>
-                                <img src={logo} className='footerlogoimg' />
+                    {/* Parte izquierda */}
+                    <div className="footer-left">
+                        <div className="footer-logo-box">
+                            <div className="footer-logo-wrapper">
+                                <img src={logo} alt="RCR Logo" className="footer-logo-img" />
                             </div>
                         </div>
 
-                        {/**  Contacto  */}
-                        <div className='footercontact'>
-                            <h5 className='footertitle'>Contacto</h5>
-                            <div className='footercontactinfo'>
-                                <p className='footersubtitle'>📞 +506 4001 0662</p>
-                                <p className='footersubtitle'>📧 reservas@rinconcorobici.com</p>
-                                <p className='footersubtitle'>📌 Cañas, Guanacaste</p>
+                        <div className="footer-contact">
+                            <h5 className="footer-heading">Contacto</h5>
+                            <div className="footer-contact-info">
+                                <p className="footer-text">📞 +506 4001 0662</p>
+                                <p className="footer-text">📧 reservas@rinconcorobici.com</p>
+                                <p className="footer-text">📌 Cañas, Guanacaste</p>
                             </div>
                         </div>
-
                     </div>
 
-                    {/**  Parte Derecha  */}
-                    <div className='footerright'>
-                        <h5 className='footertitle'>Siguenos</h5>
-                        <div className='footersocialsinfo'>
-                            <button className='footersocial' onClick={() => window.open('https://www.instagram.com/rcrrafting/', '_blank')}><FiInstagram className='footersocialicon' />rcrrafting</button>
-                            <button className='footersocial' onClick={() => window.open('https://www.facebook.com/people/RCR-Rafting/100063453527949/', '_blank')} ><FiFacebook className='footersocialicon' />RCR Rafting</button>
-                            <button className='footersocial' onClick={() => window.open('https://www.tiktok.com/@rcrrafting', '_blank')}><AiOutlineTikTok className='footersocialicon' />RCR-Rafting</button>
-                            <button className='footersocial' onClick={() => window.open('https://share.google/6Lryg4z9XD9CHzOgw', '_blank')}><AiOutlineGoogle className='footersocialicon' />RCR Rafting</button>
+                    {/* Parte derecha */}
+                    <div className="footer-right">
+                        <h5 className="footer-heading">Síguenos</h5>
+                        <div className="footer-socials">
+                            <button className="footer-social-btn" onClick={() => window.open("https://www.instagram.com/rcrrafting/", "_blank")}><FiInstagram className="footer-social-icon" />rcrrafting</button>
+                            <button className="footer-social-btn" onClick={() => window.open("https://www.facebook.com/people/RCR-Rafting/100063453527949/", "_blank")}><FiFacebook className="footer-social-icon" />RCR Rafting</button>
+                            <button className="footer-social-btn" onClick={() => window.open("https://www.tiktok.com/@rcrrafting", "_blank")}><AiOutlineTikTok className="footer-social-icon" />RCR-Rafting</button>
+                            <button className="footer-social-btn" onClick={() => window.open("https://share.google/6Lryg4z9XD9CHzOgw", "_blank")}><AiOutlineGoogle className="footer-social-icon" />RCR Rafting</button>
                         </div>
                     </div>
 
                 </div>
             </div>
-        </div>
-
-
+        </footer>
     );
-
-}
+};
 
 export default Footer;

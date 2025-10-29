@@ -3,21 +3,22 @@ body {
   font-family: sans-serif;
   margin: 0;
   padding: 0;
+  max-width: 100%;
 }
 
-.formpage {
+.form-page {
   max-width: 56rem;
   margin-left: auto;
   margin-right: auto;
   padding: 0 1rem;
 }
 
-.formheader {
+.form-header {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.formheadertitle {
+.form-header-title {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,40 +26,43 @@ body {
   margin-top: 3rem;
 }
 
-.formheaderimg {
+.form-header-img {
   width: 16rem;
   height: 9.5rem;
+  max-width: 100%;
 }
 
-.formtitle {
+.form-title {
   font-size: 1.5rem;
   line-height: 2rem;
   color: #1f2937;
   margin-bottom: 0.5rem;
 }
 
-.formdescription {
+.form-description {
   color: #4b5563;
   max-width: 42rem;
   margin-left: auto;
   margin-right: auto;
 }
 
-.formcard {
+.form-card {
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
   border-radius: 1rem;
   border: 1px solid #e5e5e5;
   margin-bottom: 2rem;
+  overflow-x: hidden;
 }
 
-.formcontentcontainer {
+.form-content-container {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+  overflow: hidden;
 }
 
-.prueba {
+.card-title {
   padding-top: 0.75rem;
   padding-bottom: 1.75rem;
   font-size: 1rem;
@@ -70,23 +74,19 @@ body {
   font-size: 16px;
 }
 
-.pruebacheckboxlabel {
-  margin-bottom: 24px;
-}
-
-.pruebaerror {
+.guardian-checkbox {
   color: #1f1f1f;
   font-weight: 500;
   font-size: 16px;
 }
 
-.prueba2 {
+.card-title2 {
   padding-top: 0.75rem;
   font-size: 1rem;
   color: #e07706;
 }
 
-.description {
+.card-description {
   color: gray;
   padding-bottom: 1.5rem;
 }
@@ -103,26 +103,29 @@ body {
   width: 100%;
 }
 
-.signaturecontainer {
-  border: 2px dashed #ccc;
-  border-radius: 8px;
-  padding: 5px;
-  background-color: white;
-  width: fit-content;
-}
+
 
 .signature-canvas {
-  border: none;
-  width: 100%;
-  height: 100%;
   display: block;
+  width: 85%;
+  height: 200px;
+  border-radius: 8px;
+  border: 2px dashed #ccc;
+  box-sizing: border-box;
+  padding: 0.3rem;
+}
+@media (max-width: 768px) {
+  .signature-canvas {
+    width: 100%;
+    height: 150px;
+  }
 }
 
 button.cleanbutton {
   font-size: 0.9rem;
   font-weight: 500;
   padding: 0.4rem 0.5rem;
-  margin-top: 1rem;
+  margin-top: 0.2rem;
   margin-bottom: 1rem;
   display: inline-flex;
   align-items: center;
@@ -137,18 +140,28 @@ button.cleanbutton:hover {
   background-color: #fff9e6;
 }
 
-.submitButton.ant-btn {
+.form-submit-container {
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-submit-container .ant-form-item {
+  margin-bottom: 1rem;
+}
+
+.submit-button.ant-btn {
   background: linear-gradient(135deg, #fdd01a 0%, #f59e0b 100%) !important;
   color: black !important;
   font-size: 1.125rem;
   font-weight: 600;
   padding: 0.75rem 1.5rem;
-  display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 0.5rem;
   border: none !important;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Puedes quitarlo si quieres menos sombra */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   cursor: pointer;
   transition: opacity 0.3s ease;
   height: auto;
@@ -159,4 +172,53 @@ button.cleanbutton:hover {
 }
 .submitButton.ant-btn:hover {
   opacity: 0.85;
+}
+
+
+.form-warning-card {
+  padding: 1.5rem 1.5rem 0rem;
+}
+
+.form-terms-check .ant-form-item-explain { 
+  margin-left: 2.9rem;
+  margin-bottom: 0.8rem;
+}
+.form-terms-check.ant-form-item-has-error .ant-checkbox-inner {
+  border-color: #ff4d4f !important;
+}
+
+.form-warning-description {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+@media (max-width: 768px) {
+  .form-warning-description {
+    font-size: 0.8rem;
+  }
+}
+
+.form-privacy-card {
+  background-color: #f3f4f6;
+  border-radius: 0.5rem;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+  padding: 0px 0.8rem;
+}
+
+.form-privacy-text {
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.form-privacy-icon {
+  font-size: 1.2rem;
+}
+@media (max-width: 768px) {
+  .form-privacy-text { font-size: 0.9rem; }
+  .form-privacy-icon { font-size: 3rem;}
 }

@@ -1,47 +1,37 @@
 import '../styles/Terms.css';
-import Logo from '../assets/rcrlogo.png';
+import Logo from '../assets/logo-rcr.png';
 import { FaArrowRight } from "react-icons/fa6";
 import { GoAlert } from "react-icons/go";
 import { useNavigate } from 'react-router-dom';
 
 function Terms() {
-
     const navigate = useNavigate();
 
     const formButton = () => {
         navigate('/form');
     }
 
-
-
     return (
+        <div className="terms-body">
+            <div className="terms-page">
 
-        <div className='body'>
-
-            <div className='termspage'>
-
-                {/**  HEADER  */}
-                <div className='termsheader'>
-                    <div className='termsheadertitle'>
-                        <img src={Logo} className='termsheaderimg' />
+                {/* Header */}
+                <div className="terms-header">
+                    <div className="terms-logo-container">
+                        <img src={Logo} alt="RCR Logo" className="terms-logo" />
                     </div>
-                    <h2 className='termstitle'>Terminos y Condiciones del Waiver</h2>
-                    <p className='termsdescription'>Lea cuidadosamente los siguientes ...</p>
+                    <h2 className="terms-title">Términos y Condiciones del Waiver</h2>
+                    <p className="terms-subtitle">
+                        Lea cuidadosamente los siguientes términos antes de continuar.
+                    </p>
                 </div>
 
+                {/* Terms Card */}
+                <div className="terms-card">
+                    <div className="terms-card-content">
+                        <div className="terms-text-container">
 
-                {/**   TERMS CONTENt   */}
-                <div className='termscard'>
-
-                    
-
-
-                    {/**   CARDS CONTENT   */}
-                    <div className='termscardcontent'>
-
-                        <div className='termscontentcontainer'>
-
-                            <p className='termsinfo'>
+                            <p className="terms-paragraph">
                                 El suscrito entiende que ha hecho arreglos para una excursión de Rafting en Aguas Bravas o
                                 Flotación en Río proporcionada por Rincon Corobici en Costa Rica.
                                 Estoy completamente consciente de que el rafting en aguas bravas tiene peligros inherentes incluyendo
@@ -50,7 +40,7 @@ function Terms() {
                                 involucrados en su participación en el tour, sin que esto implique o autorice un reembolso.
                             </p>
 
-                            <p className='termsinfo'>
+                            <p className="terms-paragraph">
                                 El suscrito conoce y voluntariamente asume los riesgos del Rafting en Aguas Bravas o Flotación
                                 en Río, demandas, causas de acción o demandas de cualquier tipo contra
                                 Rincon Corobici y cualquiera de sus compañías asociadas, sus empleados
@@ -62,7 +52,7 @@ function Terms() {
                                 o cualquiera de sus compañías asociadas.
                             </p>
 
-                            <p className='termsinfo'>
+                            <p className="terms-paragraph">
                                 Por lo tanto, el suscrito libera, descarga y acepta salvar indemne a
                                 Rincon Corobici, y cualquiera de sus compañías asociadas, sus
                                 representantes, cesionarios, empleados, o cualquier otra persona, corporación o corporaciones
@@ -71,7 +61,7 @@ function Terms() {
                                 durante este viaje.
                             </p>
 
-                            <p className='termsinfo'>
+                            <p className="terms-paragraph">
                                 El tour contratado o actividad, así como esta liberación de responsabilidad será gobernada
                                 exclusivamente por la ley de Costa Rica. Incluso a pesar de este contrato, procedo a presentar
                                 una demanda contra Rincon Corobici, y cualquiera de sus compañías
@@ -80,9 +70,8 @@ function Terms() {
                                 voluntariamente a las leyes y jurisdicción de cualquier otro país.
                             </p>
 
-
-                            <div className='termsagrements'>
-                                <p className='termsconditions'>
+                            <div className="terms-agreement">
+                                <p className="terms-agreement-text">
                                     HE LEÍDO LA EXONERACIÓN Y LIBERACIÓN PRECEDENTE, ANTES DE AFIRMAR MI FIRMA ABAJO,
                                     Y GARANTIZO QUE SOY DE EDAD LEGAL Y ENTIENDO COMPLETAMENTE EL CONTENIDO Y CONSECUENCIAS
                                     DE LA MISMA, INCLUYENDO QUE ESTOY RENUNCIANDO A MIS DERECHOS DE PRESENTAR DEMANDA SI
@@ -90,22 +79,21 @@ function Terms() {
                                 </p>
                             </div>
 
-
-                            <div className='termsrequirementscontainer'>
+                            <div className="terms-requirements-wrapper">
                                 <div>
-                                    <h4 className='termsrequirementstitle'>Información Requerida</h4>
-                                    <ul className='termsrequirements'>
+                                    <h4 className="terms-requirements-title">Información Requerida</h4>
+                                    <ul className="terms-requirements-list">
                                         <li>Nombre completo impreso</li>
-                                        <li>Nombre completo impreso</li>
-                                        <li>Nombre completo impreso</li>
+                                        <li>Firma del participante</li>
+                                        <li>Fecha de la actividad</li>
                                     </ul>
                                 </div>
                                 <div>
-                                    <h4 className='termsrequirementstitle'>Para menores de 18 años</h4>
-                                    <ul className='termsrequirements'>
-                                        <li>Nombre completo impreso</li>
-                                        <li>Nombre completo impreso</li>
-                                        <li>Nombre completo impreso</li>
+                                    <h4 className="terms-requirements-title">Para menores de 18 años</h4>
+                                    <ul className="terms-requirements-list">
+                                        <li>Nombre completo impreso del menor</li>
+                                        <li>Firma del padre, madre o tutor</li>
+                                        <li>Relación con el menor</li>
                                     </ul>
                                 </div>
                             </div>
@@ -113,24 +101,25 @@ function Terms() {
                     </div>
                 </div>
 
-
-                <div className="warningcontainer">
-                    <GoAlert className="warningicon" />
-                    <div className="warningdescription">
-                        <div className="warningtitle"><strong>Advertencia:</strong></div>
-                        <div className="warningtext">
-                            Rincon Corobici no es responsable por anteojos, audífonos, lentes de contacto, cámaras, dentaduras, u otros objetos de valor.
+                {/* Warning Box */}
+                <div className="terms-warning">
+                    <GoAlert className="terms-warning-icon" />
+                    <div className="terms-warning-textbox">
+                        <div className="terms-warning-title"><strong>Advertencia:</strong></div>
+                        <div className="terms-warning-message">
+                            Rincon Corobici no es responsable por anteojos, audífonos, lentes de contacto,
+                            cámaras, dentaduras, u otros objetos de valor.
                         </div>
                     </div>
                 </div>
 
-
-                <div className='buttoncontainer'>
-                    <button className='nextbutton' onClick={formButton}> <FaArrowRight className='buttonicon'/>Acepto los terminos - Proceder al Formulario</button>
+                {/* Button */}
+                <div className="terms-button-container">
+                    <button className="terms-next-button" onClick={formButton}>
+                        <FaArrowRight className="terms-button-icon"/>Acepto los términos - Proceder al Formulario
+                    </button>
                 </div>
-
             </div>
-
         </div>
     )
 }

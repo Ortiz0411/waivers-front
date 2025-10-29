@@ -1,0 +1,135 @@
+.body {
+    background: linear-gradient(-135deg, #fefce8 0%, #f5efe3 100%);
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-page {
+    max-width: 56rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+}
+
+.admin-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.admin-page-header-title {
+    font-size: 1.75rem;
+    color: #1f2937;
+    font-weight: 700;
+}
+
+.logout-btn {
+    background: linear-gradient(135deg, #fdd01a 0%, #f59e0b 100%);
+    color: black;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.6rem 1rem;
+    border-radius: 0.375rem;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    opacity: 0.95;
+}
+
+.logout-btn:hover {
+    opacity: 0.85;
+}
+
+.admin-card {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+}
+
+.admin-card-container {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+.admin-card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.search-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.search-text-input {
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    width: 220px;
+    max-width: 220px;
+    height: 40px;
+}
+
+.search-section-date .ant-picker {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    height: 40px;
+    font-size: 1rem;
+}
+
+.search-section-clearbtn .ant-btn {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    color: #1f2937;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    height: 40px;
+    padding: 0 1rem;
+}
+
+.search-section-divider {
+    color: #111111;
+}
+
+.table-section {
+    background-color: #ffffff;
+    border-radius: 1rem;
+}
+
+.table-header th {
+    font-size: 1.1rem;
+    padding: 0.25rem 0.50rem;
+    height: 0px;
+    line-height: 0;
+}
+
+.table-header tr {
+    font-size: 1.1rem;
+    padding: 0.25rem 0.50rem;
+    height: 0px;
+    line-height: 1.2rem;
+}
+
+.waiver-info-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.waiver-info-email {
+    font-size: 0.8rem;
+}
+
+.table-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+

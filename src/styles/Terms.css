@@ -1,23 +1,23 @@
-body {
+.terms-body {
   background: linear-gradient(-135deg, #fefce8 0%, #f5efe3 100%);
   font-family: sans-serif;
   margin: 0;
   padding: 0;
 }
 
-.termspage {
+.terms-page {
   max-width: 56rem;
   margin-left: auto;
   margin-right: auto;
   padding: 0 1rem;
 }
 
-.termsheader {
+.terms-header {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.termsheadertitle {
+.terms-logo-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,30 +25,27 @@ body {
   margin-top: 3rem;
 }
 
-.termsheaderimg {
+.terms-logo {
   width: 16rem;
   height: 9.5rem;
 }
 
-.termstitle {
+.terms-title {
   font-size: 1.5rem;
   line-height: 2rem;
   color: #1f2937;
   margin-bottom: 0.5rem;
 }
 
-.termsdescription {
+.terms-subtitle {
   color: #4b5563;
   max-width: 42rem;
   margin-left: auto;
   margin-right: auto;
 }
 
-
-/**  CARDS  */
-
-
-.termscard {
+/* Card */
+.terms-card {
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -57,96 +54,67 @@ body {
   margin-bottom: 2rem;
 }
 
-.termscardheader {
-  display: grid;
-  align-items: start;
-  gap: 0.375rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  padding-top: 1rem;
-  padding-bottom: 0.5rem;
-}
-
-.termscardtitle {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #991b1b;
-  align-items: center;
-}
-
-.termsicon {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-.termscarddescription {
-  color: #7f8188;
-}
-
-.termscardcontent {
+.terms-card-content {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
 
-.termscontentcontainer {
+.terms-text-container {
   font-size: 1rem;
   line-height: 1.25rem;
 }
 
-.termsinfo {
+.terms-paragraph {
   color: #1f2937;
   line-height: 1.5;
 }
 
-.termsagrements {
+/* Agreement */
+.terms-agreement {
   background-color: #f3f4f6;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.1rem;
-  padding-bottom: 0.1rem;
+  padding: 0.1rem 1rem;
   border-radius: 0.5rem;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
-.termsconditions {
+.terms-agreement-text {
   color: #1f2937;
   line-height: 1.5;
   font-weight: 600;
 }
 
-.termsrequirementscontainer {
+/* Requirements */
+.terms-requirements-wrapper {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
-  padding-right: 1rem;
-  padding-left: 1rem;
-  padding-top: 0rem;
+  padding: 0 1rem;
   background-color: #f9fafb;
   border-radius: 0.5rem;
 }
 @media (min-width: 768px) {
-  .termsrequirementscontainer {
+  .terms-requirements-wrapper {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-.termsrequirementstitle {
-  font-weight: 00;
+.terms-requirements-title {
+  font-weight: 600;
   color: #1f2937;
   margin-bottom: 0.5rem;
 }
 
-.termsrequirements {
+.terms-requirements-list {
   font-size: 0.875rem;
   line-height: 1.25rem;
   color: #4b5563;
 }
 
-.warningcontainer {
+/* Warning */
+.terms-warning {
   background-color: #fecaca;
   border: 1px solid #dc2917;
   color: #991b1b;
@@ -158,32 +126,33 @@ body {
   margin-bottom: 1.5rem;
 }
 
-.warningicon {
+.terms-warning-icon {
   margin-right: 0.5rem;
   font-size: 1.25rem;
   color: #dc2917;
 }
 
-@media (max-width:780px) {
-  .warningicon {
+@media (max-width: 780px) {
+  .terms-warning-icon {
     width: 2.5rem;
   }
 }
 
-.warningdescription {
+.terms-warning-textbox {
   font-size: 1rem;
   line-height: 1.4;
 }
 
-.warningtitle {
+.terms-warning-title {
   margin-bottom: 0.2rem;
 }
 
-.warningtext {
+.terms-warning-message {
   font-weight: 400;
 }
 
-.buttoncontainer {
+/* Button */
+.terms-button-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -191,7 +160,7 @@ body {
   gap: 1rem;
 }
 
-.nextbutton {
+.terms-next-button {
   background: linear-gradient(135deg, #fdd01a 0%, #f59e0b 100%);
   color: black;
   font-size: 0.9rem;
@@ -206,18 +175,18 @@ body {
   cursor: pointer;
 }
 
-.nextbutton:hover {
+.terms-next-button:hover {
   opacity: 0.85;
 }
 
-.buttonicon {
+.terms-button-icon {
   width: 0.7rem;
   height: 0.9rem;
   margin-right: 0.7rem;
 }
 
-@media (max-width:780px) {
-  .buttonicon {
+@media (max-width: 780px) {
+  .terms-button-icon {
     margin-right: 0.35rem;
   }
 }

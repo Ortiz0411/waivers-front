@@ -1,5 +1,5 @@
 export const Languajes = [
-    {laguaje: 'English', label: 'EN'},
-    {laguaje: 'Español', label: 'ES'},
-    {laguaje: 'Français', label: 'FR'}
+    {languaje: 'English', label: 'EN'},
+    {languaje: 'Español', label: 'ES'},
+    {languaje: 'Français', label: 'FR'}
 ]
