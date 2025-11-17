@@ -91,7 +91,7 @@ const WaiverForm = () => {
             if (!sigCanvasRef.current || sigCanvasRef.current.isEmpty()) { return }
 
             // Si es menor, se exige el nombre del tutor, si no, envia "Adulto"
-            const legalGuardian = values.under_age && values.legal_guardian ? values.legal_guardian : 'Adulto'
+            const legalGuardian = values.under_age && values.legal_guardian ? values.legal_guardian : 'Adult'
             const tourDate = values.tour_date.format('YYYY-MM-DD')
 
             const personalData = {
@@ -142,7 +142,7 @@ const WaiverForm = () => {
             setLoading(true)
 
             // POST al backend, guarda el waiver
-            const response = await fetch(
+            await fetch(
                 `${import.meta.env.VITE_API_URL}/api/waivers`,
                 {
                     method: 'POST',
