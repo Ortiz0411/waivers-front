@@ -90,7 +90,7 @@ const WaiverForm = () => {
 
             if (!sigCanvasRef.current || sigCanvasRef.current.isEmpty()) { return }
 
-            // Si es menor, se exige el nombre del tutor, si no, envia "Adulto"
+            // Si es menor, se exige el nombre del tutor, si no, envia "Adult"
             const legalGuardian = values.under_age && values.legal_guardian ? values.legal_guardian : 'Adult'
             const tourDate = values.tour_date.format('YYYY-MM-DD')
 
