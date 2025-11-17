@@ -5,22 +5,23 @@ import RaftMobile from '../assets/raft-rcr-mobile.jpg'
 import { useEffect } from 'react'
 import Footer from './Footer'
 import '../styles/Success.css'
+import { useTranslation } from 'react-i18next'
 
 const Success = () => {
 
-
     const location = useLocation()
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
-    console.log(location)
-
-
+    // Extrae el estado
     const email = location.state?.email
     const tour_date = location.state?.tour_date
 
-    const date = new Date(tour_date).toLocaleDateString('en-EN', { day: '2-digit', month: 'long', year: 'numeric' })
+    // Convierte la fecha a DD MONTH YYYY
+    const date = new Date(tour_date).toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' })
 
 
+    // Si no hay datos se redirige al home
     useEffect(() => {
         if (!email || !tour_date) {
             navigate('/')
@@ -44,17 +45,18 @@ const Success = () => {
 
                     <div className='success-img-container'>
 
+                        {/** Imagen para escritorios y moviles */}
                         <img src={Raft} className='raft-img' />
-                        <img src={RaftMobile} className='raft-img-mobile' />
+                        <img src={RaftMobile}  className='raft-img-mobile' />
 
                         <div className='success-img-text'>
                             <div className='success-heading'>
-                                <h2 className='success-title'>Waiver Submitted Successfully</h2>
-                                <p>Thank you for submitting your waiver.</p>
+                                <h2 className='success-title'> {t("success.title")} </h2>
+                                <p> {t("success.description")} </p>
                             </div>
-                            <p>We have received your information and You're all set for your adventure on {date}!</p>
-                            <p>Please arrive 15 minutes prior to your scheduled tour time.</p>
-                            <p>We look forward to seeing you!</p>
+                            <p> {t("success.received")} {date}!</p>
+                            <p> {t("success.indication")} </p>
+                            <p> {t("success.goodbye")} </p>
                         </div>
 
                     </div>
@@ -69,16 +71,6 @@ const Success = () => {
 
     )
 
-
-
-    {/*
-        <div style={{ textAlign: "center", marginTop: "5rem" }}>
-            <h1>Waiver enviado con exito.</h1>
-            <p>Se ha enviado la confirmacion al correo: </p>
-            <p><strong>{email}</strong></p>
-        </div>*/}
-
-
 }
 
-export default Success;
+export default Success

@@ -1,19 +1,22 @@
-import '../styles/Header.css';
-import { RiAdminLine } from "react-icons/ri";
-import { Languajes } from '../utils/Languajes';
+import '../styles/Header.css'
+import { RiAdminLine } from "react-icons/ri"
+import { Languajes } from '../utils/Languajes.ts'
 import { Select } from 'antd'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 
 const Header: React.FC = () => {
 
-    const { Option } = Select
-
     const navigate = useNavigate()
+
+    const { i18n } = useTranslation()
+    const lang = i18n.language
 
     const loginButton = () => {
         navigate('/login')
     }
+
 
     return (
         <header className="header">
@@ -21,25 +24,31 @@ const Header: React.FC = () => {
                 <div className="header-info">
                     <div className="header-sides">
 
-                        <Select defaultValue={Languajes[0].languaje} className='header-select' style={{ minWidth: 120 }}>
-                            {Languajes.map((languaje) => (
-                                <Option key={languaje.languaje} value={languaje.languaje}>
+                        {/** Selector de idioma */}
+                        <Select value={lang} className="header-select"
+                            options={Languajes.map(l => ({
+                                label: (
                                     <span className='option-content'>
-                                        <span className='lang-label'>{languaje.label}</span>
-                                        <span className='lang-code'>{languaje.languaje}</span>
+                                        <span className='lang-label'>{l.languaje}</span>
+                                        <span className='lang-code'>{l.label}</span>
                                     </span>
+                                ),
+                                value: l.languaje.toLowerCase()
+                            }))}
+                            onChange={(value) => i18n.changeLanguage(value)}
+                        />
 
-                                </Option>
-                            ))}
-                        </Select>
-
-                        <button className="admin-button" onClick={loginButton}><RiAdminLine className='admin-icon' />Panel Admin</button>
+                        {/** Boton al panel admin */}
+                        <button className="admin-button" type="button" onClick={loginButton}>
+                            <RiAdminLine className="admin-icon" />Admin
+                        </button>
+                        
                     </div>
                 </div>
             </div>
         </header>
 
-    );
-};
+    )
+}
 
-export default Header;
+export default Header

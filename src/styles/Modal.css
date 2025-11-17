@@ -20,7 +20,7 @@
     color: #f9b930;
 }
 
-.details-header-sent{
+.details-header-sent {
     font-size: 1rem;
     margin-top: 0;
     color: #727272;
@@ -70,4 +70,69 @@
 
 .details-date-title strong {
     display: block;
+}
+
+
+
+
+
+
+
+img[alt="signature"] {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+
+    .ant-modal-body {
+        padding: 12px !important;
+    }
+
+    .details-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .25rem;
+    }
+
+    .details-header-name {
+        font-size: 1.6rem;
+        line-height: 1.15;
+    }
+
+    .details-header-id {
+        font-size: 1rem;
+        margin-right: 0;
+    }
+
+    .details-header-sent {
+        font-size: 0.9rem;
+    }
+
+    .details-divider-title {
+        font-size: 1.25rem;
+        line-height: 1.1;
+    }
+
+    .details-personal-info {
+        grid-template-columns: 1fr;
+        gap: .4rem .75rem;
+        margin-left: 0;
+        font-size: 0.95rem;
+    }
+
+    .medical-list {
+        grid-template-columns: 1fr;
+        gap: .5rem 1rem;
+        margin-left: 0;
+        font-size: 0.95rem;
+    }
+
+    .details-date-title {
+        text-align: left;
+    }
+
+    .details-container {
+        margin-top: 1.5rem;
+    }
 }

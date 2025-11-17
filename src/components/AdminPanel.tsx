@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom"
 import { Button, DatePicker, Input, Divider, Table, Tag } from "antd"
-import '../styles/AdminPanel.css'
-import { useEffect, useState } from "react"
-import dayjs from "dayjs"
+import "../styles/AdminPanel.css"
+import Logo from '../assets/logo-rcr.png'
+import { useEffect, useMemo, useState } from "react"
+import dayjs, { Dayjs } from "dayjs"
 import WaiverModal from "./WaiverModal"
-import { MdOutlineRemoveRedEye, MdOutlineFileDownload } from "react-icons/md"
+import { MdOutlineRemoveRedEye, MdOutlineFileDownload, MdLogout } from "react-icons/md"
+import { useNavigate } from "react-router-dom"
 
 
 type waiver = {
@@ -21,12 +22,34 @@ type waiver = {
 const AdminPanel: React.FC = () => {
 
 
-    const [waivers, setwaivers] = useState<waiver[]>([])
+    const navigate = useNavigate()
+
+    const [waivers, setWaivers] = useState<waiver[]>([])
     const [loading, setLoading] = useState(false)
 
     const [selectedwaiver, setSelectedwaiver] = useState<number | null>(null)
     const [modalOpen, setModalOpen] = useState(false)
 
+    const [search, setSearch] = useState("")
+    const [date, setDate] = useState<Dayjs | null>(null)
+
+    // Normaliza texto de busqueda
+    const normalize = (text: string) => (text).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+
+    const formatDate = (date?: string | Dayjs | null) => date ? dayjs(date).format('YYYY-MM-DD') : ''
+
+    // Filtro de resultados con useMemo
+    const searchWaiver = useMemo(() => {
+        const text = normalize(search.trim())
+        return waivers.filter(w => {
+            const byText = !text || normalize(w.name).includes(text) || normalize(w.email).includes(text)
+            const byDate = !date || formatDate(w.tour_date) === formatDate(date)
+            return byText && byDate
+        })
+    }, [waivers, search, date])
+
+
+    // Etiqueta de riesgo, segun nivel de riesgo
     const riskTag = (risk: string) => {
         switch (risk) {
             case 'Bajo': return <Tag color="green">Bajo</Tag>
@@ -35,24 +58,28 @@ const AdminPanel: React.FC = () => {
         }
     }
 
+
+    // Abre modal con la informacion completa
     const openwaiver = (w: waiver) => {
         setSelectedwaiver(w.id)
         setModalOpen(true)
     }
-
+    // Cierra modal con la informacion completa
     const closeModal = () => {
         setSelectedwaiver(null)
         setModalOpen(false)
     }
 
 
+
+    // Carga todos los waivers
     useEffect(() => {
         const loadwaivers = async () => {
             try {
                 setLoading(true)
-                const res = await fetch("http://localhost:4000/api/waivers", { credentials: 'include' })
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waivers`, { credentials: 'include' })
                 const data = await res.json()
-                setwaivers(data)
+                setWaivers(data)
             } catch (err) {
                 console.error(err)
             } finally {
@@ -63,6 +90,27 @@ const AdminPanel: React.FC = () => {
     }, [])
 
 
+    // Descarga el waiver en formato PDF
+    const pdfDownload = async (value: waiver) => {
+
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waivers/${value.id}/pdf`, {
+            credentials: 'include'
+        })
+
+        const blob = await res.blob()
+        const url = window.URL.createObjectURL(blob)
+
+        const doc = document.createElement('a')
+        doc.href = url
+        doc.download = `Waiver-${value.name}.pdf`
+        document.body.appendChild(doc)
+        doc.click()
+        doc.remove()
+        window.URL.revokeObjectURL(url)
+    }
+
+
+    // Difinicion de columnas 
     const columns = [
         {
             title: 'Participante', dataIndex: 'name', key: 'name',
@@ -70,9 +118,21 @@ const AdminPanel: React.FC = () => {
                 <div>
                     <div className='waiver-info-name'>{value.name}</div>
                     <div className='waiver-info-email'>{value.email}</div>
-                    {value.legal_guardian !== 'Adulto' && (
-                        <Tag color="default" >Es menor</Tag>
-                    )}
+
+                    <div className="waiver-info-tags">
+                        {value.legal_guardian !== 'Adulto' && (<Tag color="default" >Es menor</Tag>)}
+                        <span className="waiver-risk-mobile">{riskTag(value.risk_level)}</span>
+                    </div>
+
+                    {/** Distribucion diferente en moviles */}
+                    <div className="waiver-info-name-mobile">
+                        <Button size="small" onClick={() => openwaiver(value)}>
+                            <MdOutlineRemoveRedEye size={16} />
+                        </Button>
+                        <Button size="small" onClick={() => pdfDownload(value)}>
+                            <MdOutlineFileDownload size={16} />
+                        </Button>
+                    </div>
                 </div>
             )
         },
@@ -94,39 +154,42 @@ const AdminPanel: React.FC = () => {
             title: 'Accion', key: 'accion',
             render: (_: any, value: waiver) => (
                 <div className='table-buttons'>
+
+                    {/** Botones para ver y descargar el waiver */}
                     <Button size='middle' onClick={() => openwaiver(value)}>
-                        <MdOutlineRemoveRedEye size={16}/>
+                        <MdOutlineRemoveRedEye size={16} />
                     </Button>
-                    <Button size='middle' onClick={() => openwaiver(value)}>
-                        <MdOutlineFileDownload size={16}/>
+                    <Button size='middle' onClick={() => pdfDownload(value)}>
+                        <MdOutlineFileDownload size={16} />
                     </Button>
                 </div>
-
             )
         }
     ]
 
 
-    const navigate = useNavigate()
+    {/** Logout desde el backend */}
+    const logout = async () => {
+        try {
+            await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
+                method: 'POST',
+                credentials: 'include',
+            })
+        } finally {
+            navigate('/login', { replace: true })
+        }
+    }
 
-    /*const doLogout = async () => {
-        await fetch('https://waivers-api.onrender.com/api/auth/logout', {
-            method: 'POST',
-            credentials: 'include',
-        });
-        message.success('Sesión cerrada');
-        navigate('/login');
-    };*/
 
     return (
 
-        <div className='body'>
+        <div className='body-admin'>
             <div className='admin-page'>
 
 
                 <div className='admin-page-header'>
-                    <h1 className='admin-page-header-title'>waivers</h1>
-                    <button className='logout-btn'>Logout</button>
+                    <h1 className='admin-page-header-title'><img src={Logo} className="admin-page-logo" /></h1>
+                    <button className='logout-btn' onClick={logout}> <MdLogout className="logout-icon"/> Logout</button>
                 </div>
 
 
@@ -135,16 +198,18 @@ const AdminPanel: React.FC = () => {
 
                         <h2 className='admin-card-title'>Buscar</h2>
                         <div className='search-container'>
-                            <Input placeholder="Nombre o email" className='search-text-input'></Input>
+                            <Input value={search} onChange={(e) => setSearch(e.target.value)} allowClear placeholder="Nombre o email" className='search-text-input'></Input>
                             <div className='search-section-date'>
-                                <DatePicker placeholder='Seleccionar fecha' />
+                                <DatePicker placeholder='Seleccionar fecha' value={date} onChange={(d) => setDate(d)} allowClear showToday={false} presets={[
+                                    { label: 'Ayer', value: dayjs().subtract(1, 'day') },
+                                    { label: 'Hoy', value: dayjs() },
+                                    { label: 'Mañana', value: dayjs().add(1, 'day') },
+                                ]} />
                             </div>
                             <div className='search-section-clearbtn'>
-                                <Button type='default'>Limpiar</Button>
-                                <Divider type='vertical' className='search-section-divider' style={{ borderColor: '#000000', marginLeft:15, marginRight:15 }} />
-                                <Button type='default'>Ayer</Button>
-                                <Button type='default'>Hoy</Button>
-                                <Button type='default'>Mañana</Button>
+                                <Button type='default' onClick={() => {setSearch(''), setDate(null)}}>Limpiar</Button>
+                                <Divider type='vertical' className='search-section-divider' style={{ borderColor: '#000000', marginLeft: 15, marginRight: 10 }} />
+                                <span className="result-count">Mostrando: {searchWaiver.length}</span>
                             </div>
                         </div>
 
@@ -155,10 +220,9 @@ const AdminPanel: React.FC = () => {
 
                 <div className='admin-card'>
                     <div className='admin-card-container'>
-
                         <h2 className='admin-card-title'>Waivers Completados</h2>
                         <div className='table-section-table'>
-                            <Table columns={columns} dataSource={waivers} loading={loading} rowKey="id" className='table-header' />
+                            <Table columns={columns} dataSource={searchWaiver} loading={loading} rowKey="id" className='table-header' />
                         </div>
 
                     </div>
@@ -172,7 +236,6 @@ const AdminPanel: React.FC = () => {
 
 
     )
-
 }
 
 export default AdminPanel

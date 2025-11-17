@@ -1,123 +1,121 @@
-import React from "react"
+import "../styles/Home.css"
 import Logo from "../assets/logo-rcr.png"
 import { MdOutlineShield } from "react-icons/md"
 import { IoDocumentTextOutline } from "react-icons/io5"
 import { CiMedicalClipboard } from "react-icons/ci"
 import { AiOutlineSignature } from "react-icons/ai"
 import { useNavigate } from "react-router-dom"
-import "../styles/Home.css"
-
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./Header"
+import Footer from "./Footer"
+import { useTranslation } from "react-i18next"
 
 const Home: React.FC = () => {
+
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     const termsButton = () => {
-        navigate('/terms');
-    };
+        navigate('/terms')
+    }
 
     return (
         <div>
+
             <Header />
 
-            {/* Hero Section */}
+            {/* Hero Section (Seccion principal) */}
             <section className="hero-section">
                 <div className="hero-container">
-                    <div className="hero-logo-wrapper">
+
+                    {/* Logo principal */}
+                    <div>
                         <div className="hero-logo-box">
                             <img src={Logo} alt="RCR Logo" className="hero-logo" />
                         </div>
                     </div>
+
+                    {/* Texto principal */}
                     <h2 className="hero-title">
-                        VIVE LA AVENTURA
-                        <span className="hero-title-highlight">SEGURA EN EL RIO</span>
+                        {t('home.homeTitle1')}
+                        <span className="hero-title-highlight">{t('home.homeTitle2')}</span>
                     </h2>
                     <p className="hero-description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae dolore
-                        odio vel unde, quis impedit voluptatum voluptas necessitatibus
-                        perferendis doloribus! Praesentium voluptate ipsum laudantium optio
-                        officiis! Similique molestiae dolor iusto?
+                        {t('home.description')}
                     </p>
                     <button className="hero-cta" onClick={termsButton}>
                         <MdOutlineShield className="hero-cta-icon" />
-                        Completar Formulario
+                        {t("home.botton")}
                     </button>
+
                 </div>
             </section>
 
-            {/* Steps Section */}
+            {/* Seccion de pasos */}
             <section className="steps-section">
                 <div className="steps-container">
                     <div className="steps-header">
-                        <h3 className="steps-title">PROCESO EN 3 PASOS</h3>
-                        <p className="steps-subtitle">PROCESO SIMPLE Y SEGURO</p>
+                        <h3 className="steps-title">{t("home.steps")}</h3>
+                        <p className="steps-subtitle">{t("home.stepsDesc")}</p>
                     </div>
 
                     <div className="steps-grid">
-                        {/* Step 1 */}
+                        
+                        {/* Paso 1 */}
                         <div className="step-card">
                             <div className="step-card-header">
                                 <div className="step-number">1</div>
                                 <div className="step-icon-wrapper">
                                     <IoDocumentTextOutline className="step-icon" />
                                 </div>
-                                <div className="step-title">LEER TERMINOS</div>
+                                <div className="step-title">{t("home.step1Title")}</div>
                             </div>
                             <div className="step-card-content">
                                 <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit,
-                                    est vero, nam magnam maiores facere sint similique excepturi
-                                    doloribus dolores, quisquam vitae fuga! Molestias unde fugit,
-                                    praesentium aperiam similique voluptatum.
+                                    {t("home.step1Desc")}
                                 </p>
                             </div>
                         </div>
 
-                        {/* Step 2 */}
+                        {/* Paso 2 */}
                         <div className="step-card">
                             <div className="step-card-header">
                                 <div className="step-number step-number-2">2</div>
                                 <div className="step-icon-wrapper step-icon-wrapper-2">
                                     <CiMedicalClipboard className="step-icon step-icon-2" />
                                 </div>
-                                <div className="step-title step-title-2">INFORMACION MEDICA</div>
+                                <div className="step-title step-title-2">{t("home.step2Title")}</div>
                             </div>
                             <div className="step-card-content">
                                 <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit,
-                                    est vero, nam magnam maiores facere sint similique excepturi
-                                    doloribus dolores, quisquam vitae fuga! Molestias unde fugit,
-                                    praesentium aperiam similique voluptatum.
+                                    {t("home.step2Desc")}
                                 </p>
                             </div>
                         </div>
 
-                        {/* Step 3 */}
+                        {/* Paso 3 */}
                         <div className="step-card">
                             <div className="step-card-header">
                                 <div className="step-number step-number-3">3</div>
                                 <div className="step-icon-wrapper step-icon-wrapper-3">
                                     <AiOutlineSignature className="step-icon step-icon-3" />
                                 </div>
-                                <div className="step-title step-title-3">FIRMA DIGITAL</div>
+                                <div className="step-title step-title-3">{t("home.step3Title")}</div>
                             </div>
                             <div className="step-card-content">
                                 <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit,
-                                    est vero, nam magnam maiores facere sint similique excepturi
-                                    doloribus dolores, quisquam vitae fuga! Molestias unde fugit,
-                                    praesentium aperiam similique voluptatum.
+                                    {t("home.step3Desc")}
                                 </p>
                             </div>
                         </div>
+
                     </div>
+
                 </div>
             </section>
 
             <Footer />
         </div>
-    );
-};
+    )
+}
 
-export default Home;
+export default Home

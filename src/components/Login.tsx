@@ -3,6 +3,7 @@ import { Form, Input, Button, message } from "antd"
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../styles/Login.css'
+import { IoHome } from "react-icons/io5"
 
 
 function Login() {
@@ -11,6 +12,7 @@ function Login() {
     const navigate = useNavigate()
 
 
+    /** Envio de datos para iniciar sesion */
     const onFinish = async (values: { username: string, password: string }) => {
 
         if (loading) return
@@ -21,14 +23,15 @@ function Login() {
             const username = values.username?.trim()
             const password = values.password?.trim()
 
+            // Timeout si el backend no responde
             const controller = new AbortController()
             const timeOut = setTimeout(() => controller.abort(), 5000)
 
-            const res = await fetch('http://localhost:4000/api/auth/login', {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify({username, password}),
+                body: JSON.stringify({ username, password }),
                 signal: controller.signal
             }).finally(() => clearTimeout(timeOut))
 
@@ -36,15 +39,12 @@ function Login() {
 
             message.success('Ingreso exitoso')
             navigate('/admin')
-            
-        } catch (err: any) {
-            console.error(err)
+
+        } catch {
         } finally {
             setloading(false)
         }
-
-        console.log('se presiono el boton', values)
-    } 
+    }
 
 
     return (
@@ -53,44 +53,50 @@ function Login() {
             <div className="login-page">
 
                 <div className="login-card">
-                    
-                        <div className='login-header'>
-                            <div className='login-logo'>
-                                <img src={Logo} alt='RCR Logo' />
-                            </div>
-                            <h3 className='login-title'>Admin Panel</h3>
-                            <p className='login-subtitle'>Ingrese sus credeciales</p>
+
+                    <div className='login-header'>
+                        <div className='login-logo'>
+                            <img src={Logo} alt='RCR Logo' />
                         </div>
+                        <h3 className='login-title'>Iniciar Sesion</h3>
+                        <p className='login-subtitle'>Ingrese sus credeciales</p>
+                    </div>
 
-                        <div className='login-form'>
+                    <div className='login-form'>
 
-                            <Form layout='vertical' requiredMark={false} onFinish={onFinish}>
+                        <Form layout='vertical' requiredMark={false} onFinish={onFinish}>
 
-                                <Form.Item
-                                    label='Usuario'
-                                    name='username'
-                                    rules={[{ required: true, message: 'Ingrese su usuario'}]}
-                                >
-                                    <Input placeholder='Usuario' autoComplete='username'/>
-                                </Form.Item>
+                            <Form.Item
+                                label='Usuario'
+                                name='username'
+                                rules={[{ required: true, message: 'Ingrese su usuario' }]}
+                            >
+                                <Input placeholder='Usuario' autoComplete='username' />
+                            </Form.Item>
 
-                                <Form.Item
-                                    label='Contraseña'
-                                    name='password'
-                                    rules={[{ required: true, message: 'Ingrese su contraseña'}]}
-                                >
-                                    <Input.Password placeholder='Contraseña' autoComplete='current-password'/>
-                                </Form.Item>
+                            <Form.Item
+                                label='Contraseña'
+                                name='password'
+                                rules={[{ required: true, message: 'Ingrese su contraseña' }]}
+                            >
+                                <Input.Password placeholder='Contraseña' autoComplete='current-password' />
+                            </Form.Item>
 
-                                <Form.Item>
+                            <Form.Item>
+                                <div className='login-buttons'>
+                                    <Button type='default' className='home-button' onClick={() => navigate('/')}>
+                                        <IoHome />
+                                    </Button>
                                     <Button htmlType='submit' className='submit-button' loading={loading} block>
                                         Ingresar
                                     </Button>
-                                </Form.Item>
+                                </div>
 
-                            </Form>
+                            </Form.Item>
 
-                        </div>
+                        </Form>
+
+                    </div>
 
                 </div>
 

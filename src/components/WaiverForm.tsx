@@ -2,12 +2,12 @@ import Logo from '../assets/logo-rcr.png'
 import { MdOutlineShield } from "react-icons/md"
 import SignatureCanvas from "react-signature-canvas"
 import '../styles/Form.css'
-import { conditions } from '../utils/Conditions.tsx'
 import { useState, useEffect, useRef } from "react"
 import { useNavigate } from 'react-router-dom'
 import dayjs, { Dayjs } from "dayjs"
 
-import { Form, Button, Checkbox, DatePicker, Input, Space, Row, Col, InputNumber, message } from 'antd';
+import { Form, Button, Checkbox, DatePicker, Input, Space, Row, Col, InputNumber } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 
 export type WaiverFormData = {
@@ -44,40 +44,55 @@ export type WaiverFormData = {
     signature: string
 
     terms: boolean
-};
-
-
+}
 
 const WaiverForm = () => {
 
-    const [form] = Form.useForm<WaiverFormData>();
-
+    const [form] = Form.useForm<WaiverFormData>()
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
-
     const sigCanvasRef = useRef<SignatureCanvas>(null)
-    const clearCanvas = () => sigCanvasRef.current?.clear()
+    const navigate = useNavigate()
+    const { t } = useTranslation()
 
+    const conditions = [
+        { name: "alcoholism", label: t("conditions.alcoholism") },
+        { name: "claustrophobia", label: t("conditions.claustrophobia") },
+        { name: "dizziness", label: t("conditions.dizziness") },
+        { name: "ear_infection", label: t("conditions.ear_infection") },
+        { name: "epilepsy", label: t("conditions.epilepsy") },
+        { name: "peptic_ulcers", label: t("conditions.peptic_ulcers") },
+        { name: "respiratory_problems", label: t("conditions.respiratory_problems") },
+        { name: "neck_injure", label: t("conditions.neck_injury") },
+        { name: "back_problems", label: t("conditions.back_problems") },
+        { name: "drug_use", label: t("conditions.drug_use") },
+        { name: "depression", label: t("conditions.depression") },
+        { name: "heart_problems", label: t("conditions.heart_problems") },
+        { name: "recent_operation", label: t("conditions.recent_operation") },
+        { name: "headaches", label: t("conditions.headaches") },
+        { name: "overweight", label: t("conditions.overweight") }
+    ]
 
+    // Limpiar firma
+    const clearCanvas = () => {
+        sigCanvasRef.current?.clear()
+        form.resetFields(['signature'])
+    }
+
+    // Detecta si se marca o no la casilla
     const isUnderAge = Form.useWatch('under_age', form)
 
-
+    /**
+     * Completa los campos, valida firma, envia al backend.
+     */
     const onFinish = async (values: WaiverFormData) => {
 
         try {
 
-            if (!sigCanvasRef.current || sigCanvasRef.current.isEmpty()) {
-                message.error('Falta firma')
-                return
-            }
+            if (!sigCanvasRef.current || sigCanvasRef.current.isEmpty()) { return }
 
-            setLoading(true)
-
-            const signature = sigCanvasRef.current?.toDataURL("image/png")
-
-
+            // Si es menor, se exige el nombre del tutor, si no, envia "Adulto"
             const legalGuardian = values.under_age && values.legal_guardian ? values.legal_guardian : 'Adulto'
-            const tourDate = values.tour_date ? values.tour_date.format('YYYY-MM-DD') : null
+            const tourDate = values.tour_date.format('YYYY-MM-DD')
 
             const personalData = {
                 name: values.name,
@@ -105,14 +120,17 @@ const WaiverForm = () => {
             }
 
             const medicalDates = {
-                other_condition: values.other_condition || 'Ninguno',
+                other_condition: values.other_condition ?? 'Ninguno',
                 pregnancy: values.pregnancy ?? 0,
-                medications: values.medications || 'Ninguno',
-                date_medications: values.date_medications ? values.date_medications.format('YYYY-MM-DD') : 'No aplica',
-                date_examination: values.date_examination ? values.date_examination.format('YYYY-MM-DD') : 'No aplica',
-                date_xray: values.date_xray ? values.date_xray.format('YYYY-MM-DD') : 'No aplica',
-                other_areas: values.other_areas || 'Ninguno'
+                medications: values.medications ?? 'Ninguno',
+                date_medications: values.date_medications.format('YYYY-MM-DD'),
+                date_examination: values.date_examination.format('YYYY-MM-DD'),
+                date_xray: values.date_xray.format('YYYY-MM-DD'),
+                other_areas: values.other_areas ?? 'Ninguno'
             }
+
+            // Convierte el canvas a WebP
+            const signature = sigCanvasRef.current.toDataURL("image/webp", 0.6)
 
             const waiver = {
                 ...personalData,
@@ -121,11 +139,11 @@ const WaiverForm = () => {
                 signature
             }
 
-            console.log('Campos: ', waiver)
+            setLoading(true)
 
-
+            // POST al backend, guarda el waiver
             const response = await fetch(
-                /*'https://waivers-api.onrender.com/api/waivers'*/'http://localhost:4000/api/waivers',
+                `${import.meta.env.VITE_API_URL}/api/waivers`,
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -133,55 +151,41 @@ const WaiverForm = () => {
                 }
             )
 
-
-            if (!response.ok) {
-                throw new Error('Error al enviar formulario')
-            }
-
-            message.success('Formulario enviado')
-
-            const dateStr = values.tour_date.format('YYYY-MM-DD')
-            navigate('/success', { state: { email: values.email, tour_date: dateStr } })
+            navigate('/success', { state: { email: values.email, tour_date: tourDate } })
 
             form.resetFields()
             sigCanvasRef.current.clear()
 
-            
-
         } catch (err) {
-            console.error(err)
-            message.error('Error al procesar datos')
         }
         finally {
             setLoading(false)
         }
-
-        console.log('Submitted:', values)
-    };
+    }
 
 
+    // Si desmarca "menor", limpia el campo tutor
     useEffect(() => {
         if (!isUnderAge) {
-            form.setFieldsValue({ legal_guardian: undefined });
+            form.setFieldsValue({ legal_guardian: undefined })
         }
-    }, [isUnderAge, form]);
-
+    }, [isUnderAge, form])
 
 
 
     return (
 
-        <div className="body">
+        <div>
 
             <div className="form-page">
 
-                {/**  HEADER  */}
+                {/** Form Header */}
                 <div className="form-header">
                     <div className="form-header-title">
                         <img src={Logo} className="form-header-img" />
                     </div>
-                    <h2 className="form-title">Formulario de ...</h2>
-                    <p className="form-description">Complete los campos a continuacion ...</p>
+                    <h2 className="form-title">{t("form.title")}</h2>
+                    <p className="form-description">{t("form.description1")}<br />{t("form.description2")}</p>
                 </div>
 
 
@@ -192,12 +196,13 @@ const WaiverForm = () => {
                     onFinish={onFinish}
                 >
 
+                    {/** Datos Personales */}
                     <div className='form-card'>
                         <div className='form-content-container'>
 
 
                             <div className="card-title">
-                                Informacion Personal
+                                {t("form.personalInfo")}
                             </div>
 
 
@@ -206,25 +211,25 @@ const WaiverForm = () => {
                                 <Col xs={24} sm={12}>
                                     <Form.Item
                                         name={"name"}
-                                        label="Full Name"
-                                        rules={[{ required: true, message: "Please enter your full name"},
-                                                { max: 59, message: "Maximo 60 caracteres"}
+                                        label={t("form.name")}
+                                        rules={[{ required: true, message: t("form.nameError") },
+                                        { max: 59, message: t("form.max60Characters") }
                                         ]}
                                     >
-                                        <Input placeholder="Enter your full name" maxLength={60}/>
+                                        <Input maxLength={60} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={12}>
                                     <Form.Item
                                         name={"email"}
-                                        label="Email"
-                                        rules={[{ required: true, message: "Please enter your email" },
-                                                { max: 59, message: "Maximo 60 caracteres"},
-                                                { type: "email", message: "Please enter a valid email addres" }
+                                        label={t("form.email")}
+                                        rules={[{ required: true, message: t("form.emailError") },
+                                        { max: 59, message: t("form.max60Characters") },
+                                        { type: "email", message: t("form.emailValid") }
                                         ]}
                                     >
-                                        <Input placeholder="email@email.com" maxLength={60}/>
+                                        <Input maxLength={60} />
                                     </Form.Item>
                                 </Col>
 
@@ -238,7 +243,7 @@ const WaiverForm = () => {
                                         valuePropName="checked"
                                         style={{ marginBottom: 24 }}
                                     >
-                                        <Checkbox><span className="guardian-checkbox">Is under 18 years old?</span></Checkbox>
+                                        <Checkbox><span className="guardian-checkbox">{t("form.under18")}</span></Checkbox>
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -246,12 +251,12 @@ const WaiverForm = () => {
                             {isUnderAge && (
                                 <Form.Item
                                     name={"legal_guardian"}
-                                    label="Legal Guardian Name"
-                                    rules={[{ required: true, message: 'Please enter the legal guardian name' },
-                                            { max: 59, message: "Maximo 60 caracteres"}
+                                    label={t("form.tutorName")}
+                                    rules={[{ required: true, message: t("form.tutorNameError") },
+                                    { max: 59, message: t("form.max60Characters") }
                                     ]}
                                 >
-                                    <Input placeholder="Guardian's full name" maxLength={60}/>
+                                    <Input maxLength={60} />
                                 </Form.Item>
                             )}
 
@@ -259,10 +264,10 @@ const WaiverForm = () => {
                                 <Col xs={24} sm={12}>
                                     <Form.Item
                                         name={"tour_date"}
-                                        label={"Dia del Tour"}
-                                        rules={[{ required: true, message: 'Please enter the date of your tour.' }]}
+                                        label={t("form.tourDate")}
+                                        rules={[{ required: true, message: t("form.tourDateError") }]}
                                     >
-                                        <DatePicker disabledDate={(current) => current && current < dayjs().startOf('day')} />
+                                        <DatePicker placeholder='' disabledDate={(current) => current && current < dayjs().startOf('day')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -272,26 +277,19 @@ const WaiverForm = () => {
                     </div>
 
 
-                    {/**   CARDS CONTENT   */}
+                    {/** Condiciones medicas */}
                     <div className='form-card'>
                         <div className='form-content-container'>
 
 
-                            <div className="card-title2">
-                                Condiciones Medicas
-                            </div>
-                            <div className="card-description">
-                                Marque todas las condiciones que apliquen a su historial medico
-                            </div>
-
+                            <div className="card-title2">{t("form.medicalConditions")}</div>
+                            <div className="card-description">{t("form.medicalConditionsDesc")}</div>
 
                             <Row gutter={16}>
                                 {conditions.map((condition, index) => (
                                     <Col span={12} key={index}>
                                         <Form.Item
-                                            name={condition.name}
-                                            valuePropName="checked"
-                                            noStyle
+                                            name={condition.name} valuePropName="checked" noStyle
                                         >
                                             <Checkbox>
                                                 <span className="conditions">{condition.label}</span>
@@ -304,17 +302,17 @@ const WaiverForm = () => {
 
                             <Form.Item
                                 name={"other_condition"}
-                                label={"Otras Condiciones"}
+                                label={t("form.otherConditions")}
                                 style={{ marginTop: '1.5rem' }}
-                                rules={[{ max: 119, message: "Maximo 120 caracteres"}]}
+                                rules={[{ max: 119, message: t("form.max120Characters") }]}
                             >
-                                <Input maxLength={120}/>
+                                <Input maxLength={120} />
                             </Form.Item>
 
 
                             <Form.Item
                                 name={"pregnancy"}
-                                label={"Pregnancy (Months, if Apply)"}
+                                label={t("form.pregnancy")}
                                 style={{ marginTop: '1.5rem' }}
                             >
                                 <InputNumber min={0} max={9} />
@@ -323,10 +321,10 @@ const WaiverForm = () => {
 
                             <Form.Item
                                 name={"medications"}
-                                label={"Actual Medicines"}
-                                rules={[{ max: 119, message: "Maximo 120 caracteres"}]}
+                                label={t("form.actualMedicines")}
+                                rules={[{ max: 119, message: t("form.max120Characters") }]}
                             >
-                                <Input maxLength={120}/>
+                                <Input maxLength={120} />
                             </Form.Item>
 
 
@@ -335,30 +333,30 @@ const WaiverForm = () => {
                                 <Col xs={24} sm={8}>
                                     <Form.Item
                                         name={"date_medications"}
-                                        label={"Ultimo Medicamento"}
-                                        rules={[{ required: true, message: 'Please enter a valid date.' }]}
+                                        label={t("form.lastMedicine")}
+                                        rules={[{ required: true, message: t("form.lastMedicineError") }]}
                                     >
-                                        <DatePicker className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} />
+                                        <DatePicker placeholder='' className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={8}>
                                     <Form.Item
                                         name={"date_examination"}
-                                        label={"Ultimo Examen Medico"}
-                                        rules={[{ required: true, message: 'Please enter a valid date.' }]}
+                                        label={t("form.lastMedEx")}
+                                        rules={[{ required: true, message: t("form.lastMedExError") }]}
                                     >
-                                        <DatePicker className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} />
+                                        <DatePicker placeholder='' className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={8}>
                                     <Form.Item
                                         name={"date_xray"}
-                                        label={"Ultima Radiografia"}
-                                        rules={[{ required: true, message: 'Please enter a valid date.' }]}
+                                        label={t("form.lastRad")}
+                                        rules={[{ required: true, message: t("form.lastRadError") }]}
                                     >
-                                        <DatePicker className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} />
+                                        <DatePicker placeholder='' className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} />
                                     </Form.Item>
                                 </Col>
 
@@ -367,63 +365,65 @@ const WaiverForm = () => {
 
                             <Form.Item
                                 name={"other_areas"}
-                                label={"Otras Condiciones Medicas"}
-                                rules={[{ max: 119, message: "Maximo 120 caracteres"}]}
+                                label={t("form.otherAreas")}
+                                rules={[{ max: 119, message: t("form.max120Characters") }]}
                             >
-                                <Input maxLength={120}/>
+                                <Input maxLength={120} />
                             </Form.Item>
 
                         </div>
                     </div>
 
 
-                    {/**   CARDS CONTENT   */}
+                    {/** Firma */}
                     <div className='form-card'>
                         <div className='form-content-container'>
 
-                            <div className="card-title2">Firma Digital</div>
-                            <div className="card-description">
-                                Firme en el area de abajo usando su dedo o mouse
-                            </div>
+                            <div className="card-title2">{t("form.digitalSignature")}</div>
+                            <div className="card-description">{t("form.digitalSignatureDesc")}</div>
 
 
-
+                            {/** Firma con dos validaciones: no puede estar vacia, no puede pesar mas de 30kb */}
                             <Form.Item
                                 name="signature"
                                 rules={[{
-                                    validator: () => {
-                                        if (sigCanvasRef.current?.isEmpty()) {
-                                            return Promise.reject('Debe completar su firma')
+                                    validator: async () => {
+
+                                        const sign = sigCanvasRef.current
+                                        if (!sign || sign.isEmpty()) {
+                                            return Promise.reject(t("form.digitalSignatureError"))
+                                        }
+                                        const canvas = sign.getCanvas()
+                                        const blob = await new Promise<Blob | null>((res) =>
+                                            canvas.toBlob((b) => res(b), 'image/webp', 0.6)
+                                        )
+                                        if (blob!.size > 30720) {
+                                            return Promise.reject(t("form.digitalSignatureSizeError"))
                                         }
                                         return Promise.resolve()
                                     }
                                 }]}
                             >
-                                <SignatureCanvas ref={sigCanvasRef} backgroundColor="white" canvasProps={{ className: 'signature-canvas' }}></SignatureCanvas>
+                                <SignatureCanvas ref={sigCanvasRef} onBegin={() => form.setFields([{ name: 'signature', errors: [] }])}
+                                    backgroundColor="white" canvasProps={{ className: 'signature-canvas' }}></SignatureCanvas>
                             </Form.Item>
 
-
-
-
-                            <button type='button' className="cleanbutton" onClick={clearCanvas} >Limpiar Firma</button>
+                            <button type='button' className="cleanbutton" onClick={clearCanvas} >{t("form.clearButton")}</button>
                         </div>
                     </div>
 
 
-                    {/**   CARDS CONTENT   */}
+                    {/** Terminos y envio */}
                     <div className="form-card">
                         <Form.Item
                             name={"terms"}
                             valuePropName="checked"
                             className='form-terms-check'
-                            rules={[{ required: true, message: "Debe confirmar los terminos*" }]}
+                            rules={[{ required: true, message: t("form.termsError") }]}
                         >
                             <Checkbox className='form-warning-card'>
                                 <div className='form-warning-description'>
-                                    Acepto los terminos y condiciones de RCR Rafting. Soy plenamente consciente de los riesgos inherentes que conlleva la actividad
-                                    y afirmo que he proprionado informacion medica completa y veraz. Al completar este documento, exonero de responsabilidad
-                                    a RCR Rafting, sus representantes y empleados; de cualquier lesion que pueda ocurrir durante la actividad, o en caso de proceder,
-                                    hacerlo unicamente en Costa Rica, bajo su jurisdiccion y renuncio voluntariamente a las leyes y jurisdiccion de cualquier otro pais.
+                                    {t("form.terms")}
                                 </div>
                             </Checkbox>
                         </Form.Item>
@@ -431,7 +431,7 @@ const WaiverForm = () => {
                         <div className="form-privacy-card">
                             <p className="form-privacy-text">
                                 <MdOutlineShield className='form-privacy-icon' />
-                                Su informacion personal sera protegida y utilizada unicamente para fines de seguridad.
+                                {t("form.security")}
                             </p>
 
                         </div>
@@ -440,7 +440,7 @@ const WaiverForm = () => {
                             <Form.Item>
                                 <Space>
                                     <Button htmlType="submit" className="submit-button" loading={loading}>
-                                        {loading ? 'Enviando Waiver' : 'Enviar Formulario'}
+                                        {loading ? t("form.submitButtonLoading") : t("form.submitButton")}
                                     </Button>
                                 </Space>
                             </Form.Item>
@@ -452,12 +452,9 @@ const WaiverForm = () => {
                 </Form>
 
             </div>
-
         </div>
-
     )
-
 }
 
 
-export default WaiverForm;
+export default WaiverForm

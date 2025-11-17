@@ -1,5 +1,5 @@
-import { Modal, Spin, Divider } from "antd";
-import { useEffect, useState } from "react";
+import { Modal, Spin, Divider } from "antd"
+import { useEffect, useState } from "react"
 import '../styles/Modal.css'
 
 type Waiver = {
@@ -39,13 +39,14 @@ type Waiver = {
     signature_url: string
 
     risk_level: string
-};
+}
 
-function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null; open: boolean; onClose: () => void; }) {
+function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null, open: boolean, onClose: () => void }) {
 
-    const [loading, setLoading] = useState(false);
-    const [waiver, setWaiver] = useState<Waiver | null>(null);
+    const [loading, setLoading] = useState(false)
+    const [waiver, setWaiver] = useState<Waiver | null>(null)
 
+    // Formateo de fecha a DD MONTH YYYY
     const waiverDate = new Date(waiver?.tour_date!)
     const date = waiverDate.toLocaleString('es-Es', { day: '2-digit', month: 'long', year: 'numeric' })
     const hour = waiverDate.toLocaleString('es-Es', { hour: '2-digit', minute: '2-digit' })
@@ -53,47 +54,42 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null; ope
     useEffect(() => {
 
         if (!open || !waiverId) {
-            setWaiver(null);
-            return;
+            setWaiver(null)
+            return
         }
 
-        let alive = true;
+        let exist = true
 
+        // Buscar waiver con ID
         const fetchWaiver = async () => {
             try {
-                setLoading(true);
+                setLoading(true)
 
-                const res = await fetch(`http://localhost:4000/api/waivers/${waiverId}`, {
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waivers/${waiverId}`, {
                     credentials: "include",
-                });
+                })
 
-                if (!res.ok) {
-                    const msg = `Error ${res.status}`;
-                    throw new Error(msg);
-                }
-
-                const data = (await res.json()) as Waiver;
-                if (alive) setWaiver(data);
+                const data = (await res.json()) as Waiver
+                if (exist) setWaiver(data)
             } catch (err: any) {
-                console.error(err);
-                if (alive) {
-                    setWaiver(null);
+                if (exist) {
+                    setWaiver(null)
                 }
             } finally {
-                if (alive) setLoading(false);
+                if (exist) setLoading(false)
             }
-        };
+        }
 
-        fetchWaiver();
+        fetchWaiver()
         return () => {
-            alive = false;
-        };
-    }, [open, waiverId]);
+            exist = false
+        }
+    }, [open, waiverId])
 
 
     return (
 
-        <Modal open={open} onCancel={onClose} footer={null} width={900} getContainer={false} >
+        <Modal open={open} onCancel={onClose} footer={null} width={900} getContainer={false} centered>
 
             {loading && (
                 <div style={{ display: "flex", justifyContent: "center", padding: 24 }}>
@@ -114,7 +110,7 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null; ope
                     </div>
 
 
-
+                    {/** Informacion Personal */}
                     <div className='details-container'>
 
                         <Divider orientation='left' orientationMargin='0' style={{ borderColor: '#000000' }}>
@@ -135,7 +131,7 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null; ope
                     </div>
 
 
-
+                    {/** Condiciones medicas */}
                     <div className='details-container'>
 
                         <Divider orientation='left' orientationMargin='0' style={{ borderColor: '#000000' }}>
@@ -167,7 +163,7 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null; ope
                     </div>
 
 
-
+                    {/** Otras condiciones */}
                     <div className='details-container'>
 
                         <Divider orientation='left' orientationMargin='0' style={{ borderColor: '#000000' }} >
@@ -197,7 +193,7 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null; ope
                     </div>
 
 
-
+                    {/** Fechas importantes */}
                     <div className='details-container'>
 
                         <Divider orientation='left' orientationMargin='0' style={{ borderColor: '#000000' }} >
@@ -225,6 +221,7 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null; ope
 
 
 
+                    {/** Firma */}
                     <div className='details-container'>
 
                         <Divider orientation='left' orientationMargin='0' style={{ borderColor: '#000000' }} >
@@ -248,7 +245,7 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null; ope
             )}
         </Modal>
 
-    );
+    )
 }
 
-export default WaiverModal;
+export default WaiverModal
