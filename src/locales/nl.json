@@ -80,7 +80,8 @@
         "description": "Bedankt voor het invullen.",
         "received": "We hebben je informatie ontvangen en je bent klaar voor je avontuur in",
         "indication": "Kom alsjeblieft 15 minuten voor de geplande tijd voor je tour.",
-        "goodbye": "We hopen je snel te zien!"
+        "goodbye": "We hopen je snel te zien!",
+        "complete": "Nog een formulier invullen"
     },
     "conditions": {
         "alcoholism": "Alcoholisme",

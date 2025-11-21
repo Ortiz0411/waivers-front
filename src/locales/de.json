@@ -80,7 +80,8 @@
         "description": "Vielen Dank für das Ausfüllen.",
         "received": "Wir haben deine Informationen erhalten und du bist bereit für dein Abenteuer in",
         "indication": "Bitte komme 15 Minuten vor der geplanten Uhrzeit zur Tour.",
-        "goodbye": "Wir hoffen, dich bald zu sehen!"
+        "goodbye": "Wir hoffen, dich bald zu sehen!",
+        "complete": "Weiteres Formular ausfüllen"
     },
     "conditions": {
         "alcoholism": "Alkoholismus",

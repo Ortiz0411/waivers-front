@@ -114,6 +114,62 @@
     margin-top: 0;
 }
 
+.success-buttons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.success-repeat-button {
+    width: auto;
+    padding: 0.7rem 1rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+
+    color: black;
+    background: linear-gradient(135deg, #fdd01a 0%, #f59e0b 100%);
+    border: none;
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0.95;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    cursor: pointer;
+}
+
+.success-repeat-button:hover {
+    background: linear-gradient(135deg, #fdd01a 0%, #f59e0b 100%) !important;
+    opacity: 0.85 !important;
+    color: black !important;
+}
+
+.success-home-button {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    color: #1f2937 !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.7rem 1rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    cursor: pointer;
+    opacity: 0.95;
+}
+
+.success-home-button:hover {
+    background-color: #fff9e6 !important;
+    border-color: #fbbf24 !important;
+    opacity: 0.85;
+}
+
 
 /* Responsive */
 
@@ -152,5 +208,19 @@
 
     .success-title {
         font-size: 1.2rem;
+    }
+
+    .success-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .success-repeat-button,
+    .success-home-button {
+        width: 90%;
+        padding: 0.7rem 1rem;
     }
 }

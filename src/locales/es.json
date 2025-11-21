@@ -80,7 +80,8 @@
         "description": "Muchas gracias por completarlo.",
         "received": "Hemos recibido tu información y ya estás listo para tu aventura en",
         "indication": "Por favor, llegue 15 minutos antes de la hora programada para su tour.",
-        "goodbye": "¡Esperamos verte pronto!"
+        "goodbye": "¡Esperamos verte pronto!",
+        "complete": "Completar otro formulario"
     },
     "conditions": {
         "alcoholism": "Alcoholismo",

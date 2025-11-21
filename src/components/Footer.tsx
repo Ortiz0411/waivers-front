@@ -1,7 +1,7 @@
 import "../styles/Footer.css"
 import logo from "../assets/logo-rcr.png"
 import { AiOutlineTikTok, AiOutlineGoogle } from "react-icons/ai"
-import { FiFacebook, FiInstagram } from "react-icons/fi"
+import { FiPhone, FiMapPin, FiMail, FiFacebook, FiInstagram } from "react-icons/fi"
 import { useTranslation } from "react-i18next"
 
 
@@ -29,9 +29,9 @@ const Footer: React.FC = () => {
                         <div className="footer-contact">
                             <h5 className="footer-heading">{t("footer.contact")}</h5>
                             <div className="footer-contact-info">
-                                <p className="footer-text">📞 +506 4001 0662</p>
-                                <p className="footer-text">📧 reservas@rinconcorobici.com</p>
-                                <p className="footer-text">📌 Cañas, Guanacaste</p>
+                                <p className="footer-text"><FiPhone className="footer-social-icon" /> +506 4001 0662</p>
+                                <p className="footer-text"><FiMail className="footer-social-icon" /> reservas@rinconcorobici.com</p>
+                                <p className="footer-text"><FiMapPin className="footer-social-icon" /> Cañas, Guanacaste</p>
                             </div>
                         </div>
                     </div>

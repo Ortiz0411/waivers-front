@@ -6,6 +6,8 @@ import { useEffect } from 'react'
 import Footer from './Footer'
 import '../styles/Success.css'
 import { useTranslation } from 'react-i18next'
+import { Button } from 'antd'
+import { IoHome } from 'react-icons/io5'
 
 const Success = () => {
 
@@ -14,7 +16,7 @@ const Success = () => {
     const { t } = useTranslation()
 
     // Extrae el estado
-    const email = location.state?.email
+    // Activar en caso de habilitar email const email = location.state?.email
     const tour_date = location.state?.tour_date
 
     // Convierte la fecha a DD MONTH YYYY
@@ -23,12 +25,12 @@ const Success = () => {
 
     // Si no hay datos se redirige al home
     useEffect(() => {
-        if (!email || !tour_date) {
+        if (/*!email ||*/ !tour_date) {
             navigate('/')
         }
-    }, [email, tour_date, navigate])
+    }, [/*email,*/ tour_date, navigate])
 
-    if (!email || !tour_date) return null
+    if (/*!email ||*/ !tour_date) return null
 
 
     return (
@@ -47,7 +49,7 @@ const Success = () => {
 
                         {/** Imagen para escritorios y moviles */}
                         <img src={Raft} className='raft-img' />
-                        <img src={RaftMobile}  className='raft-img-mobile' />
+                        <img src={RaftMobile} className='raft-img-mobile' />
 
                         <div className='success-img-text'>
                             <div className='success-heading'>
@@ -59,6 +61,15 @@ const Success = () => {
                             <p> {t("success.goodbye")} </p>
                         </div>
 
+                    </div>
+
+                    <div className='success-buttons'>
+                        <Button htmlType='submit' className='success-repeat-button'>
+                            {t("success.complete")}
+                        </Button>
+                        <Button type='default' className='success-home-button' onClick={() => navigate('/')}>
+                            <IoHome />
+                        </Button>
                     </div>
 
                 </div>

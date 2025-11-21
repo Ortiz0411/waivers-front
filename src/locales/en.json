@@ -80,7 +80,8 @@
         "description": "Thank you for completing it.",
         "received": "We have received your information and you are all set for your adventure in",
         "indication": "Please arrive 15 minutes before your scheduled tour time.",
-        "goodbye": "We hope to see you soon!"
+        "goodbye": "We hope to see you soon!",
+        "complete": "Fill another form"
     },
     "conditions": {
         "alcoholism": "Alcoholism",

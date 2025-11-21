@@ -14,7 +14,7 @@ export type WaiverFormData = {
     name: string
     under_age?: boolean
     legal_guardian: string
-    email: string
+    //email: string
     tour_date: Dayjs
 
     alcoholism: boolean
@@ -97,7 +97,7 @@ const WaiverForm = () => {
             const personalData = {
                 name: values.name,
                 legal_guardian: legalGuardian,
-                email: values.email,
+                //email: values.email,
                 tour_date: tourDate,
             }
 
@@ -151,7 +151,7 @@ const WaiverForm = () => {
                 }
             )
 
-            navigate('/success', { state: { email: values.email, tour_date: tourDate } })
+            navigate('/success', { state: { /*email: values.email,*/ tour_date: tourDate } })
 
             form.resetFields()
             sigCanvasRef.current.clear()
@@ -208,7 +208,7 @@ const WaiverForm = () => {
 
                             <Row gutter={16}>
 
-                                <Col xs={24} sm={12}>
+                                <Col xs={24} sm={16}> {/** poner sm en 12, en caso de habilitar el email */}
                                     <Form.Item
                                         name={"name"}
                                         label={t("form.name")}
@@ -220,6 +220,20 @@ const WaiverForm = () => {
                                     </Form.Item>
                                 </Col>
 
+
+                                {/** Borrar, en caso de habilitar el email */}
+                                <Col xs={24} sm={8}>
+                                    <Form.Item
+                                        name={"tour_date"}
+                                        label={t("form.tourDate")}
+                                        rules={[{ required: true, message: t("form.tourDateError") }]}
+                                    >
+                                        <DatePicker style={{ width: "100%" }} placeholder='' disabledDate={(current) => current && current < dayjs().startOf('day')} />
+                                    </Form.Item>
+                                </Col>
+
+
+                                {/**  
                                 <Col xs={24} sm={12}>
                                     <Form.Item
                                         name={"email"}
@@ -232,6 +246,7 @@ const WaiverForm = () => {
                                         <Input maxLength={60} />
                                     </Form.Item>
                                 </Col>
+                                */}
 
                             </Row>
 
@@ -241,7 +256,7 @@ const WaiverForm = () => {
                                     <Form.Item
                                         name={"under_age"}
                                         valuePropName="checked"
-                                        style={{ marginBottom: 24 }}
+                                        style={{ marginBottom: 18 }}
                                     >
                                         <Checkbox><span className="guardian-checkbox">{t("form.under18")}</span></Checkbox>
                                     </Form.Item>
@@ -260,6 +275,7 @@ const WaiverForm = () => {
                                 </Form.Item>
                             )}
 
+                            {/**   Activar en caso de habilitar el email
                             <Row gutter={16}>
                                 <Col xs={24} sm={12}>
                                     <Form.Item
@@ -271,6 +287,7 @@ const WaiverForm = () => {
                                     </Form.Item>
                                 </Col>
                             </Row>
+                             */}
 
 
                         </div>
