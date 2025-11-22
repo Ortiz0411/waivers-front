@@ -8,7 +8,7 @@ type Waiver = {
 
     name: string
     legal_guardian: string
-    email: string
+    //email: string
     tour_date: string
 
     alcoholism: boolean
@@ -46,7 +46,7 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null, ope
     const [loading, setLoading] = useState(false)
     const [waiver, setWaiver] = useState<Waiver | null>(null)
 
-    // Formateo de fecha a DD MONTH YYYY
+    // Date format to DD MONTH YYYY
     const waiverDate = new Date(waiver?.tour_date!)
     const date = waiverDate.toLocaleString('es-Es', { day: '2-digit', month: 'long', year: 'numeric' })
     const hour = waiverDate.toLocaleString('es-Es', { hour: '2-digit', minute: '2-digit' })
@@ -60,7 +60,7 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null, ope
 
         let exist = true
 
-        // Buscar waiver con ID
+        // Search waiver by ID
         const fetchWaiver = async () => {
             try {
                 setLoading(true)
@@ -110,7 +110,7 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null, ope
                     </div>
 
 
-                    {/** Informacion Personal */}
+                    {/** Personal Information */}
                     <div className='details-container'>
 
                         <Divider orientation='left' orientationMargin='0' style={{ borderColor: '#000000' }}>
@@ -122,7 +122,7 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null, ope
                         <div className='medical-info-container'>
                             <div className='details-personal-info'>
                                 <div><strong>Fecha del tour: </strong> {waiver.tour_date}</div>
-                                <div><strong>Email: </strong> {waiver.email}</div>
+                                {/** <div><strong>Email: </strong> {waiver.email}</div>  Activate if email is enabled  */}
                                 <div><strong>Riesgo: </strong> {waiver.risk_level}</div>
                                 <div><strong>Tutor Legal: </strong> {waiver.legal_guardian}</div>
                             </div>
@@ -131,7 +131,7 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null, ope
                     </div>
 
 
-                    {/** Condiciones medicas */}
+                    {/** Medical conditions */}
                     <div className='details-container'>
 
                         <Divider orientation='left' orientationMargin='0' style={{ borderColor: '#000000' }}>
@@ -163,7 +163,7 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null, ope
                     </div>
 
 
-                    {/** Otras condiciones */}
+                    {/** Other conditions */}
                     <div className='details-container'>
 
                         <Divider orientation='left' orientationMargin='0' style={{ borderColor: '#000000' }} >
@@ -193,7 +193,7 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null, ope
                     </div>
 
 
-                    {/** Fechas importantes */}
+                    {/** Important dates */}
                     <div className='details-container'>
 
                         <Divider orientation='left' orientationMargin='0' style={{ borderColor: '#000000' }} >
@@ -221,7 +221,7 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null, ope
 
 
 
-                    {/** Firma */}
+                    {/** Signature */}
                     <div className='details-container'>
 
                         <Divider orientation='left' orientationMargin='0' style={{ borderColor: '#000000' }} >

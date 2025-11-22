@@ -24,7 +24,7 @@ const Header: React.FC = () => {
                 <div className="header-info">
                     <div className="header-sides">
 
-                        {/** Selector de idioma */}
+                        {/** Language selector */}
                         <Select value={lang} className="header-select"
                             options={Languajes.map(l => ({
                                 label: (
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
                             onChange={(value) => i18n.changeLanguage(value)}
                         />
 
-                        {/** Boton al panel admin */}
+                        {/** Button to admin panel */}
                         <button className="admin-button" type="button" onClick={loginButton}>
                             <RiAdminLine className="admin-icon" />Admin
                         </button>

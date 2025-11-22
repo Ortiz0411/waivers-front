@@ -54,6 +54,7 @@ const WaiverForm = () => {
     const navigate = useNavigate()
     const { t } = useTranslation()
 
+
     const conditions = [
         { name: "alcoholism", label: t("conditions.alcoholism") },
         { name: "claustrophobia", label: t("conditions.claustrophobia") },
@@ -72,17 +73,28 @@ const WaiverForm = () => {
         { name: "overweight", label: t("conditions.overweight") }
     ]
 
-    // Limpiar firma
+
+    // Detects if the box is checked
+    const isUnderAge = Form.useWatch('under_age', form)
+
+
+    // If “minor” is unchecked, clear the guardian field
+    useEffect(() => {
+        if (!isUnderAge) {
+            form.setFieldsValue({ legal_guardian: undefined })
+        }
+    }, [isUnderAge, form])
+
+
+    // Clean signature
     const clearCanvas = () => {
         sigCanvasRef.current?.clear()
         form.resetFields(['signature'])
     }
 
-    // Detecta si se marca o no la casilla
-    const isUnderAge = Form.useWatch('under_age', form)
 
     /**
-     * Completa los campos, valida firma, envia al backend.
+     * Fill in the fields, validate signature, send to backend.
      */
     const onFinish = async (values: WaiverFormData) => {
 
@@ -90,7 +102,7 @@ const WaiverForm = () => {
 
             if (!sigCanvasRef.current || sigCanvasRef.current.isEmpty()) { return }
 
-            // Si es menor, se exige el nombre del tutor, si no, envia "Adult"
+            // If minor, asks the guardians name, otherwise, send “Adult”
             const legalGuardian = values.under_age && values.legal_guardian ? values.legal_guardian : 'Adult'
             const tourDate = values.tour_date.format('YYYY-MM-DD')
 
@@ -129,7 +141,7 @@ const WaiverForm = () => {
                 other_areas: values.other_areas ?? 'Ninguno'
             }
 
-            // Convierte el canvas a WebP
+            // Convert canvas to WebP
             const signature = sigCanvasRef.current.toDataURL("image/webp", 0.6)
 
             const waiver = {
@@ -141,7 +153,7 @@ const WaiverForm = () => {
 
             setLoading(true)
 
-            // POST al backend, guarda el waiver
+            // POST to backend, save the waiver
             await fetch(
                 `${import.meta.env.VITE_API_URL}/api/waivers`,
                 {
@@ -163,14 +175,7 @@ const WaiverForm = () => {
         }
     }
 
-
-    // Si desmarca "menor", limpia el campo tutor
-    useEffect(() => {
-        if (!isUnderAge) {
-            form.setFieldsValue({ legal_guardian: undefined })
-        }
-    }, [isUnderAge, form])
-
+    
 
 
     return (
@@ -194,9 +199,10 @@ const WaiverForm = () => {
                     layout="vertical"
                     requiredMark={false}
                     onFinish={onFinish}
+                    scrollToFirstError={{ behavior: 'smooth', block: 'center' }}
                 >
 
-                    {/** Datos Personales */}
+                    {/** Personal Data */}
                     <div className='form-card'>
                         <div className='form-content-container'>
 
@@ -208,7 +214,7 @@ const WaiverForm = () => {
 
                             <Row gutter={16}>
 
-                                <Col xs={24} sm={16}> {/** poner sm en 12, en caso de habilitar el email */}
+                                <Col xs={24} sm={16}> {/** set sm to 12, if email is enabled */}
                                     <Form.Item
                                         name={"name"}
                                         label={t("form.name")}
@@ -221,7 +227,7 @@ const WaiverForm = () => {
                                 </Col>
 
 
-                                {/** Borrar, en caso de habilitar el email */}
+                                {/** Delete, if email is enabled */}
                                 <Col xs={24} sm={8}>
                                     <Form.Item
                                         name={"tour_date"}
@@ -275,7 +281,7 @@ const WaiverForm = () => {
                                 </Form.Item>
                             )}
 
-                            {/**   Activar en caso de habilitar el email
+                            {/** Activate if email is enabled
                             <Row gutter={16}>
                                 <Col xs={24} sm={12}>
                                     <Form.Item
@@ -294,7 +300,7 @@ const WaiverForm = () => {
                     </div>
 
 
-                    {/** Condiciones medicas */}
+                    {/** Medical conditions */}
                     <div className='form-card'>
                         <div className='form-content-container'>
 
@@ -392,7 +398,7 @@ const WaiverForm = () => {
                     </div>
 
 
-                    {/** Firma */}
+                    {/** Signature */}
                     <div className='form-card'>
                         <div className='form-content-container'>
 
@@ -400,7 +406,7 @@ const WaiverForm = () => {
                             <div className="card-description">{t("form.digitalSignatureDesc")}</div>
 
 
-                            {/** Firma con dos validaciones: no puede estar vacia, no puede pesar mas de 30kb */}
+                            {/** Signature with two validations: cannot be empty, cannot weigh more than 30kb */}
                             <Form.Item
                                 name="signature"
                                 rules={[{
@@ -430,7 +436,7 @@ const WaiverForm = () => {
                     </div>
 
 
-                    {/** Terminos y envio */}
+                    {/** Terms and shipping */}
                     <div className="form-card">
                         <Form.Item
                             name={"terms"}

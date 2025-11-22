@@ -12,7 +12,7 @@ function Login() {
     const navigate = useNavigate()
 
 
-    /** Envio de datos para iniciar sesion */
+    /** Submit data to log in */
     const onFinish = async (values: { username: string, password: string }) => {
 
         if (loading) return
@@ -23,7 +23,7 @@ function Login() {
             const username = values.username?.trim()
             const password = values.password?.trim()
 
-            // Timeout si el backend no responde
+            // Timeout if backend does not respond
             const controller = new AbortController()
             const timeOut = setTimeout(() => controller.abort(), 5000)
 
@@ -35,12 +35,16 @@ function Login() {
                 signal: controller.signal
             }).finally(() => clearTimeout(timeOut))
 
-            if (!res.ok) throw new Error('Credenciales invalidas')
+            if (!res.ok) {
+                const data = await res.json().catch(() => null)
+                message.error(data?.error || 'Credenciales incorrectos')
+                return
+            }
 
-            message.success('Ingreso exitoso')
             navigate('/admin')
 
-        } catch {
+        } catch (err: any) {
+
         } finally {
             setloading(false)
         }

@@ -13,7 +13,7 @@ import './utils/i18n'
 const API_URL = import.meta.env.VITE_API_URL
 
 
-// Al cargar una pagina, empezamos desde arriba
+// Start from the top at loading page
 function StartOnTop() {
     const { pathname } = useLocation()
     useEffect(() => { window.scrollTo(0, 0) }, [pathname])
@@ -22,8 +22,8 @@ function StartOnTop() {
 
 
 /**
- * Protege ruta privada.
- * - Verifica si hay sesion valida, si hay -> muestra children, no hay -> redirige /login
+ * Protect private route.
+ * - Check if there is a valid session, if there is then display children, if not, redirect to /login
  */
 function IsAuth({ children }: { children: React.ReactNode }) {
     const [ok, setOk] = useState<boolean | null>(null)
@@ -40,7 +40,7 @@ function IsAuth({ children }: { children: React.ReactNode }) {
 
 
 /**
- * Router, rutas desconocidas redirigen al /
+ * Router, unknown routes redirect to home
  */
 function App() {
 

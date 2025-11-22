@@ -15,15 +15,15 @@ const Success = () => {
     const navigate = useNavigate()
     const { t } = useTranslation()
 
-    // Extrae el estado
-    // Activar en caso de habilitar email const email = location.state?.email
+    // Extract the state
+    // Activate if email is enabled - const email = location.state?.email
     const tour_date = location.state?.tour_date
 
-    // Convierte la fecha a DD MONTH YYYY
+    // Convert the date to DD MONTH YYYY
     const date = new Date(tour_date).toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' })
 
 
-    // Si no hay datos se redirige al home
+    // If there is no data, redirect to home page
     useEffect(() => {
         if (/*!email ||*/ !tour_date) {
             navigate('/')
@@ -47,7 +47,7 @@ const Success = () => {
 
                     <div className='success-img-container'>
 
-                        {/** Imagen para escritorios y moviles */}
+                        {/** Image for desktops and mobile devices */}
                         <img src={Raft} className='raft-img' />
                         <img src={RaftMobile} className='raft-img-mobile' />
 
@@ -64,7 +64,7 @@ const Success = () => {
                     </div>
 
                     <div className='success-buttons'>
-                        <Button htmlType='submit' className='success-repeat-button'>
+                        <Button htmlType='submit' className='success-repeat-button' onClick={() => navigate('/form')}>
                             {t("success.complete")}
                         </Button>
                         <Button type='default' className='success-home-button' onClick={() => navigate('/')}>

@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom"
 type waiver = {
     id: number
     name: string
-    email: string
+    //email: string
     legal_guardian: string
     tour_date: string
     created_at: string
@@ -33,23 +33,23 @@ const AdminPanel: React.FC = () => {
     const [search, setSearch] = useState("")
     const [date, setDate] = useState<Dayjs | null>(null)
 
-    // Normaliza texto de busqueda
+    // Normalize search text
     const normalize = (text: string) => (text).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 
     const formatDate = (date?: string | Dayjs | null) => date ? dayjs(date).format('YYYY-MM-DD') : ''
 
-    // Filtro de resultados con useMemo
+    // Filter results with useMemo
     const searchWaiver = useMemo(() => {
         const text = normalize(search.trim())
         return waivers.filter(w => {
-            const byText = !text || normalize(w.name).includes(text) || normalize(w.email).includes(text)
+            const byText = !text || normalize(w.name).includes(text) //|| normalize(w.email).includes(text)
             const byDate = !date || formatDate(w.tour_date) === formatDate(date)
             return byText && byDate
         })
     }, [waivers, search, date])
 
 
-    // Etiqueta de riesgo, segun nivel de riesgo
+    // Risk label, according to risk level
     const riskTag = (risk: string) => {
         switch (risk) {
             case 'Bajo': return <Tag color="green">Bajo</Tag>
@@ -59,12 +59,12 @@ const AdminPanel: React.FC = () => {
     }
 
 
-    // Abre modal con la informacion completa
+    // Open modal with complete information
     const openwaiver = (w: waiver) => {
         setSelectedwaiver(w.id)
         setModalOpen(true)
     }
-    // Cierra modal con la informacion completa
+    // Close modal with complete information
     const closeModal = () => {
         setSelectedwaiver(null)
         setModalOpen(false)
@@ -72,7 +72,7 @@ const AdminPanel: React.FC = () => {
 
 
 
-    // Carga todos los waivers
+    // Load all waivers
     useEffect(() => {
         const loadwaivers = async () => {
             try {
@@ -90,7 +90,7 @@ const AdminPanel: React.FC = () => {
     }, [])
 
 
-    // Descarga el waiver en formato PDF
+    // Download the waiver in PDF format
     const pdfDownload = async (value: waiver) => {
 
         const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waivers/${value.id}/pdf`, {
@@ -110,21 +110,21 @@ const AdminPanel: React.FC = () => {
     }
 
 
-    // Difinicion de columnas 
+    // Columns definition 
     const columns = [
         {
             title: 'Participante', dataIndex: 'name', key: 'name',
             render: (_: any, value: waiver) => (
                 <div>
                     <div className='waiver-info-name'>{value.name}</div>
-                    <div className='waiver-info-email'>{value.email}</div>
+                    {/** <div className='waiver-info-email'>{value.email}</div> */}
 
                     <div className="waiver-info-tags">
                         {value.legal_guardian !== 'Adulto' && (<Tag color="default" >Es menor</Tag>)}
                         <span className="waiver-risk-mobile">{riskTag(value.risk_level)}</span>
                     </div>
 
-                    {/** Distribucion diferente en moviles */}
+                    {/** Different distribution on mobile devices */}
                     <div className="waiver-info-name-mobile">
                         <Button size="small" onClick={() => openwaiver(value)}>
                             <MdOutlineRemoveRedEye size={16} />
@@ -155,7 +155,7 @@ const AdminPanel: React.FC = () => {
             render: (_: any, value: waiver) => (
                 <div className='table-buttons'>
 
-                    {/** Botones para ver y descargar el waiver */}
+                    {/** Buttons to view and download the waiver */}
                     <Button size='middle' onClick={() => openwaiver(value)}>
                         <MdOutlineRemoveRedEye size={16} />
                     </Button>
@@ -168,7 +168,7 @@ const AdminPanel: React.FC = () => {
     ]
 
 
-    {/** Logout desde el backend */}
+    {/** Log out from the backend */}
     const logout = async () => {
         try {
             await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
@@ -198,7 +198,7 @@ const AdminPanel: React.FC = () => {
 
                         <h2 className='admin-card-title'>Buscar</h2>
                         <div className='search-container'>
-                            <Input value={search} onChange={(e) => setSearch(e.target.value)} allowClear placeholder="Nombre o email" className='search-text-input'></Input>
+                            <Input value={search} onChange={(e) => setSearch(e.target.value)} allowClear placeholder="Nombre" className='search-text-input'></Input>
                             <div className='search-section-date'>
                                 <DatePicker placeholder='Seleccionar fecha' value={date} onChange={(d) => setDate(d)} allowClear showToday={false} presets={[
                                     { label: 'Ayer', value: dayjs().subtract(1, 'day') },
