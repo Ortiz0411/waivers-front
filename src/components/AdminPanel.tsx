@@ -120,7 +120,7 @@ const AdminPanel: React.FC = () => {
                     {/** <div className='waiver-info-email'>{value.email}</div> */}
 
                     <div className="waiver-info-tags">
-                        {value.legal_guardian !== 'Adulto' && (<Tag color="default" >Es menor</Tag>)}
+                        {value.legal_guardian !== 'Adult' && (<Tag color="default" >Es menor</Tag>)}
                         <span className="waiver-risk-mobile">{riskTag(value.risk_level)}</span>
                     </div>
 
