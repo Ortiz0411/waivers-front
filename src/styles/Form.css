@@ -243,3 +243,12 @@ button.cleanbutton:hover {
         font-size: 3rem;
     }
 }
+
+.form-page input,
+.form-page textarea,
+.form-page select,
+.form-page .ant-input,
+.form-page .ant-input-number-input,
+.form-page .ant-picker-input input {
+    font-size: 16px !important;
+}
