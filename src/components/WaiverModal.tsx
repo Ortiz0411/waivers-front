@@ -46,11 +46,6 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null, ope
     const [loading, setLoading] = useState(false)
     const [waiver, setWaiver] = useState<Waiver | null>(null)
 
-    // Date format to DD MONTH YYYY
-    const waiverDate = new Date(waiver?.tour_date!)
-    const date = waiverDate.toLocaleString('es-Es', { day: '2-digit', month: 'long', year: 'numeric' })
-    const hour = waiverDate.toLocaleString('es-Es', { hour: '2-digit', minute: '2-digit' })
-
     useEffect(() => {
 
         if (!open || !waiverId) {
@@ -85,6 +80,10 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null, ope
             exist = false
         }
     }, [open, waiverId])
+
+    const waiverDate = new Date(waiver?.tour_date!)
+    const date = waiverDate.toLocaleString('es-Es', { day: '2-digit', month: 'long', year: 'numeric' })
+    const hour = waiverDate.toLocaleString('es-Es', { hour: '2-digit', minute: '2-digit' })
 
 
     return (

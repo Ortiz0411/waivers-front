@@ -26,7 +26,7 @@ const Success = () => {
     // If there is no data, redirect to home page
     useEffect(() => {
         if (/*!email ||*/ !tour_date) {
-            navigate('/')
+            navigate('/', {replace: true})
         }
     }, [/*email,*/ tour_date, navigate])
 

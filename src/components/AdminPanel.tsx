@@ -78,6 +78,12 @@ const AdminPanel: React.FC = () => {
             try {
                 setLoading(true)
                 const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waivers`, { credentials: 'include' })
+
+                if (res.status === 401) {
+                    navigate('/login', {replace: true})
+                    return
+                }
+
                 const data = await res.json()
                 setWaivers(data)
             } catch (err) {
