@@ -429,7 +429,7 @@ const WaiverForm = () => {
                                 }]}
                             >
                                 <SignatureCanvas ref={sigCanvasRef} onBegin={() => form.setFields([{ name: 'signature', errors: [] }])}
-                                    backgroundColor="white" canvasProps={{ className: 'signature-canvas' }}></SignatureCanvas>
+                                    backgroundColor="white" clearOnResize={false} canvasProps={{ className: 'signature-canvas' }}></SignatureCanvas>
                             </Form.Item>
 
                             <button type='button' className="cleanbutton" onClick={clearCanvas} >{t("form.clearButton")}</button>
