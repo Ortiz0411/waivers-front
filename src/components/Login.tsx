@@ -30,16 +30,24 @@ function Login() {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
                 body: JSON.stringify({ username, password }),
                 signal: controller.signal
             }).finally(() => clearTimeout(timeOut))
 
+            const data = await res.json().catch(() => null)
+
             if (!res.ok) {
-                const data = await res.json().catch(() => null)
-                message.error(data?.error || 'Credenciales incorrectos')
+                message.error(data?.error || 'Credenciales incorrectas')
                 return
             }
+
+            const accessToken = data?.access_token as string | undefined
+            if (!accessToken) {
+                message.error('No se recibió el token de autenticación')
+                return
+            }
+
+            localStorage.setItem('login_token', accessToken)
 
             navigate('/admin')
 

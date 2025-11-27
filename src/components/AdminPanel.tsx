@@ -1,4 +1,4 @@
-import { Button, DatePicker, Input, Divider, Table, Tag } from "antd"
+import { Button, DatePicker, Input, Divider, Table, Tag, message } from "antd"
 import "../styles/AdminPanel.css"
 import Logo from '../assets/logo-rcr.png'
 import { useEffect, useMemo, useState } from "react"
@@ -21,6 +21,7 @@ type waiver = {
 
 const AdminPanel: React.FC = () => {
 
+    const apiUrl = import.meta.env.VITE_API_URL
 
     const navigate = useNavigate()
 
@@ -77,15 +78,37 @@ const AdminPanel: React.FC = () => {
         const loadwaivers = async () => {
             try {
                 setLoading(true)
-                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waivers`, { credentials: 'include' })
+
+                const token = localStorage.getItem('login_token')
+                if (!token) {
+                    message.error('Debe iniciar sesión')
+                    navigate('/login', { replace: true })
+                    return
+                }
+
+                const res = await fetch(`${apiUrl}/api/waivers`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
 
                 if (res.status === 401) {
-                    navigate('/login', {replace: true})
+                    message.error('Sesión inválida o expirada')
+                    localStorage.removeItem('rcr_token')
+                    navigate('/login', { replace: true })
+                    return
+                }
+
+                if (res.status === 403) {
+                    message.error('No tiene permisos para ver esta información')
+                    navigate('/login', { replace: true })
                     return
                 }
 
                 const data = await res.json()
                 setWaivers(data)
+
             } catch (err) {
                 console.error(err)
             } finally {
@@ -93,15 +116,31 @@ const AdminPanel: React.FC = () => {
             }
         }
         loadwaivers()
-    }, [])
+    }, [apiUrl, navigate])
 
 
     // Download the waiver in PDF format
     const pdfDownload = async (value: waiver) => {
 
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waivers/${value.id}/pdf`, {
-            credentials: 'include'
+        const token = localStorage.getItem('login_token')
+        if (!token) {
+            message.error('Debe iniciar sesión')
+            navigate('/login', { replace: true })
+            return
+        }
+
+        const res = await fetch(`${apiUrl}/api/waivers/${value.id}/pdf`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         })
+
+        if (res.status === 401 || res.status === 403) {
+            message.error('No autorizado para descargar este PDF')
+            navigate('/login', { replace: true })
+            return
+        }
 
         const blob = await res.blob()
         const url = window.URL.createObjectURL(blob)
@@ -174,16 +213,10 @@ const AdminPanel: React.FC = () => {
     ]
 
 
-    {/** Log out from the backend */}
+    {/** Log out from the backend */ }
     const logout = async () => {
-        try {
-            await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
-                method: 'POST',
-                credentials: 'include',
-            })
-        } finally {
-            navigate('/login', { replace: true })
-        }
+        localStorage.removeItem('rcr_token')
+        navigate('/login', { replace: true })
     }
 
 
@@ -195,7 +228,7 @@ const AdminPanel: React.FC = () => {
 
                 <div className='admin-page-header'>
                     <h1 className='admin-page-header-title'><img src={Logo} className="admin-page-logo" /></h1>
-                    <button className='logout-btn' onClick={logout}> <MdLogout className="logout-icon"/> Logout</button>
+                    <button className='logout-btn' onClick={logout}> <MdLogout className="logout-icon" /> Logout</button>
                 </div>
 
 
@@ -213,7 +246,7 @@ const AdminPanel: React.FC = () => {
                                 ]} />
                             </div>
                             <div className='search-section-clearbtn'>
-                                <Button type='default' onClick={() => {setSearch(''), setDate(null)}}>Limpiar</Button>
+                                <Button type='default' onClick={() => { setSearch(''), setDate(null) }}>Limpiar</Button>
                                 <Divider type='vertical' className='search-section-divider' style={{ borderColor: '#000000', marginLeft: 15, marginRight: 10 }} />
                                 <span className="result-count">Mostrando: {searchWaiver.length}</span>
                             </div>
