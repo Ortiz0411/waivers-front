@@ -60,9 +60,23 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null, ope
             try {
                 setLoading(true)
 
+                const token = localStorage.getItem('login_token')
+                if (!token) {
+                    setWaiver(null)
+                    return
+                }
+
                 const res = await fetch(`${import.meta.env.VITE_API_URL}/api/waivers/${waiverId}`, {
-                    credentials: "include",
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
                 })
+
+                if (!res.ok) {
+                    setWaiver(null)
+                    return
+                }
 
                 const data = (await res.json()) as Waiver
                 if (exist) setWaiver(data)
@@ -76,9 +90,11 @@ function WaiverModal({ waiverId, open, onClose }: { waiverId: number | null, ope
         }
 
         fetchWaiver()
+
         return () => {
             exist = false
         }
+        
     }, [open, waiverId])
 
     const waiverDate = new Date(waiver?.tour_date!)
