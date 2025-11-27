@@ -95,7 +95,7 @@ const AdminPanel: React.FC = () => {
 
                 if (res.status === 401) {
                     message.error('Sesión inválida o expirada')
-                    localStorage.removeItem('rcr_token')
+                    localStorage.removeItem('login_token')
                     navigate('/login', { replace: true })
                     return
                 }
@@ -215,7 +215,7 @@ const AdminPanel: React.FC = () => {
 
     {/** Log out from the backend */ }
     const logout = async () => {
-        localStorage.removeItem('rcr_token')
+        localStorage.removeItem('login_token')
         navigate('/login', { replace: true })
     }
 
