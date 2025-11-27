@@ -419,9 +419,9 @@ const WaiverForm = () => {
                                         }
                                         const canvas = sign.getCanvas()
                                         const blob = await new Promise<Blob | null>((res) =>
-                                            canvas.toBlob((b) => res(b), 'image/webp', 0.6)
+                                            canvas.toBlob((b) => res(b), 'image/webp', 0.4)
                                         )
-                                        if (blob!.size > 30720) {
+                                        if (blob!.size > 81920) {
                                             return Promise.reject(t("form.digitalSignatureSizeError"))
                                         }
                                         return Promise.resolve()
