@@ -48,7 +48,6 @@ function Login() {
             }
 
             localStorage.setItem('login_token', accessToken)
-
             navigate('/admin')
 
         } catch (err: any) {

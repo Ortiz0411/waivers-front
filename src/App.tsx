@@ -29,13 +29,41 @@ function IsAuth({ children }: { children: React.ReactNode }) {
     const [ok, setOk] = useState<boolean | null>(null)
 
     useEffect(() => {
-        fetch(`${API_URL}/api/auth/me`, { credentials: "include" })
-            .then(res => setOk(res.ok))
-            .catch(() => setOk(false))
-    }, [])
+
+        const checkAuth = async () => {
+            const token = localStorage.getItem("login_token")
+
+            if (!token) {
+                setOk(false)
+                return
+            }
+
+            try {
+                
+                const res = await fetch(`${API_URL}/api/auth/me`, {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+
+                if (!res.ok) {
+                    localStorage.removeItem("login_token")
+                    setOk(false)
+                    return
+                }
+
+                setOk(true)
+            } catch (err) {
+                setOk(false)
+            }
+        }
+
+        checkAuth()
+    }), []
 
     if (ok === null) return null
-    return ok ? children : <Navigate to="/login" replace />
+    return ok ? <>{children}</> : <Navigate to="/login" replace />
 }
 
 
