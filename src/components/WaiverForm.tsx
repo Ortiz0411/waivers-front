@@ -218,7 +218,7 @@ const WaiverForm = () => {
                                 <Col xs={24} sm={16}> {/** set sm to 12, if email is enabled */}
                                     <Form.Item
                                         name={"name"}
-                                        label={t("form.name")}
+                                        label={ <span>{t("form.name")} <span style={{color: 'red'}}>*</span> </span> }
                                         rules={[{ required: true, message: t("form.nameError") },
                                         { max: 59, message: t("form.max60Characters") }
                                         ]}
@@ -232,7 +232,7 @@ const WaiverForm = () => {
                                 <Col xs={24} sm={8}>
                                     <Form.Item
                                         name={"tour_date"}
-                                        label={t("form.tourDate")}
+                                        label={ <span>{t("form.tourDate")} <span style={{color: 'red'}}>*</span> </span> }
                                         rules={[{ required: true, message: t("form.tourDateError") }]}
                                     >
                                         <DatePicker style={{ width: "100%" }} placeholder='' disabledDate={(current) => current && current < dayjs().startOf('day')} />
@@ -273,7 +273,7 @@ const WaiverForm = () => {
                             {isUnderAge && (
                                 <Form.Item
                                     name={"legal_guardian"}
-                                    label={t("form.tutorName")}
+                                    label={ <span>{t("form.tutorName")} <span style={{color: 'red'}}>*</span> </span> }
                                     rules={[{ required: true, message: t("form.tutorNameError") },
                                     { max: 59, message: t("form.max60Characters") }
                                     ]}
@@ -344,7 +344,7 @@ const WaiverForm = () => {
 
 
                             <Form.Item
-                                name={"medications"}
+                                name={"medications"} 
                                 label={t("form.actualMedicines")}
                                 rules={[{ max: 119, message: t("form.max120Characters") }]}
                             >
@@ -357,7 +357,7 @@ const WaiverForm = () => {
                                 <Col xs={24} sm={8}>
                                     <Form.Item
                                         name={"date_medications"}
-                                        label={t("form.lastMedicine")}
+                                        label={ <span>{t("form.lastMedicine")} <span style={{color: 'red'}}>*</span> </span> }
                                         rules={[{ required: true, message: t("form.lastMedicineError") }]}
                                     >
                                         <DatePicker placeholder='' className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} />
@@ -367,7 +367,7 @@ const WaiverForm = () => {
                                 <Col xs={24} sm={8}>
                                     <Form.Item
                                         name={"date_examination"}
-                                        label={t("form.lastMedEx")}
+                                        label={ <span>{t("form.lastMedEx")} <span style={{color: 'red'}}>*</span> </span> }
                                         rules={[{ required: true, message: t("form.lastMedExError") }]}
                                     >
                                         <DatePicker placeholder='' className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} />
@@ -377,7 +377,7 @@ const WaiverForm = () => {
                                 <Col xs={24} sm={8}>
                                     <Form.Item
                                         name={"date_xray"}
-                                        label={t("form.lastRad")}
+                                        label={ <span>{t("form.lastRad")} <span style={{color: 'red'}}>*</span> </span> }
                                         rules={[{ required: true, message: t("form.lastRadError") }]}
                                     >
                                         <DatePicker placeholder='' className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} />
