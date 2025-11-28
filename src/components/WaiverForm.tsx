@@ -141,8 +141,8 @@ const WaiverForm = () => {
                 other_areas: values.other_areas ?? 'Ninguno'
             }
 
-            // Convert canvas to WebP
-            const signature = sigCanvasRef.current.toDataURL("image/webp", 0.6)
+            // Convert canvas to png
+            const signature = sigCanvasRef.current.toDataURL("image/png", 0.6)
 
             const waiver = {
                 ...personalData,
@@ -418,8 +418,10 @@ const WaiverForm = () => {
                                             return Promise.reject(t("form.digitalSignatureError"))
                                         }
                                         const canvas = sign.getCanvas()
+
+                                        // Signature format
                                         const blob = await new Promise<Blob | null>((res) =>
-                                            canvas.toBlob((b) => res(b), 'image/webp', 0.4)
+                                            canvas.toBlob((b) => res(b), 'image/png')
                                         )
                                         if (blob!.size > 81920) {
                                             return Promise.reject(t("form.digitalSignatureSizeError"))
