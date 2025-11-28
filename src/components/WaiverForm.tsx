@@ -176,7 +176,7 @@ const WaiverForm = () => {
         }
     }
 
-    
+
 
 
     return (
@@ -403,8 +403,8 @@ const WaiverForm = () => {
                     <div className='form-card'>
                         <div className='form-content-container'>
 
-                            <div className="card-title2">{t("form.digitalSignature")}</div>
-                            <div className="card-description">{t("form.digitalSignatureDesc")}</div>
+                            <div className="card-title2">{t("form.signature")}</div>
+                            <div className="card-description">{t("form.signatureDesc")}</div>
 
 
                             {/** Signature with two validations: cannot be empty, cannot weigh more than 30kb */}
@@ -412,19 +412,9 @@ const WaiverForm = () => {
                                 name="signature"
                                 rules={[{
                                     validator: async () => {
-
                                         const sign = sigCanvasRef.current
                                         if (!sign || sign.isEmpty()) {
-                                            return Promise.reject(t("form.digitalSignatureError"))
-                                        }
-                                        const canvas = sign.getCanvas()
-
-                                        // Signature format
-                                        const blob = await new Promise<Blob | null>((res) =>
-                                            canvas.toBlob((b) => res(b), 'image/png')
-                                        )
-                                        if (blob!.size > 81920) {
-                                            return Promise.reject(t("form.digitalSignatureSizeError"))
+                                            return Promise.reject(t("form.signatureError"))
                                         }
                                         return Promise.resolve()
                                     }
