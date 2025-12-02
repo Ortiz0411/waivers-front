@@ -107,6 +107,19 @@ body {
     line-height: 2.2;
 }
 
+.form_na_field {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.na-checkbox {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #1f1f1f;
+}
+
 .datepicker {
     width: 100%;
 }

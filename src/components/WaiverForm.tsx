@@ -33,13 +33,19 @@ export type WaiverFormData = {
     headaches: boolean
     overweight: boolean
 
+    preg?: boolean
+    d_med_na?: boolean
+    d_exa_na?: boolean
+    d_xray_na?: boolean
+
     other_condition: string
     pregnancy: number
     medications: string
 
-    date_medications: Dayjs
-    date_examination: Dayjs
-    date_xray: Dayjs
+    date_medications?: Dayjs
+    date_examination?: Dayjs
+    date_xray?: Dayjs
+
     other_areas: string
     signature: string
 
@@ -76,14 +82,42 @@ const WaiverForm = () => {
 
     // Detects if the box is checked
     const isUnderAge = Form.useWatch('under_age', form)
+    const isPregnant = Form.useWatch('preg', form)
+    const dateMedNA = Form.useWatch('d_med_na', form)
+    const dateExamNA = Form.useWatch('d_exa_na', form)
+    const dateXrayNA = Form.useWatch('d_xray_na', form)
 
 
-    // If “minor” is unchecked, clear the guardian field
+    // Clear optional fields
     useEffect(() => {
         if (!isUnderAge) {
             form.setFieldsValue({ legal_guardian: undefined })
         }
     }, [isUnderAge, form])
+
+    useEffect(() => {
+        if (isPregnant) {
+            form.setFieldsValue({ pregnancy: undefined })
+        }
+    }, [isPregnant, form])
+
+    useEffect(() => {
+        if (dateMedNA) {
+            form.setFieldsValue({ date_medications: undefined })
+        }
+    }, [dateMedNA, form])
+
+    useEffect(() => {
+        if (dateExamNA) {
+            form.setFieldsValue({ date_examination: undefined })
+        }
+    }, [dateExamNA, form])
+
+    useEffect(() => {
+        if (dateXrayNA) {
+            form.setFieldsValue({ date_xray: undefined })
+        }
+    }, [dateXrayNA, form])
 
 
     // Clean signature
@@ -133,11 +167,11 @@ const WaiverForm = () => {
 
             const medicalDates = {
                 other_condition: values.other_condition ?? 'Ninguno',
-                pregnancy: values.pregnancy ?? 0,
+                pregnancy: values.preg ? 0 : (values.pregnancy ?? 0),
                 medications: values.medications ?? 'Ninguno',
-                date_medications: values.date_medications.format('YYYY-MM-DD'),
-                date_examination: values.date_examination.format('YYYY-MM-DD'),
-                date_xray: values.date_xray.format('YYYY-MM-DD'),
+                date_medications: values.d_med_na ? '1001-01-01' : values.date_medications?.format('YYYY-MM-DD'),
+                date_examination: values.d_exa_na ? '1001-01-01' : values.date_examination?.format('YYYY-MM-DD'),
+                date_xray: values.d_xray_na ? '1001-01-01' : values.date_xray?.format('YYYY-MM-DD'),
                 other_areas: values.other_areas ?? 'Ninguno'
             }
 
@@ -218,7 +252,7 @@ const WaiverForm = () => {
                                 <Col xs={24} sm={16}> {/** set sm to 12, if email is enabled */}
                                     <Form.Item
                                         name={"name"}
-                                        label={ <span>{t("form.name")} <span style={{color: 'red'}}>*</span> </span> }
+                                        label={<span>{t("form.name")} <span style={{ color: 'red' }}>*</span> </span>}
                                         rules={[{ required: true, message: t("form.nameError") },
                                         { max: 59, message: t("form.max60Characters") }
                                         ]}
@@ -232,7 +266,7 @@ const WaiverForm = () => {
                                 <Col xs={24} sm={8}>
                                     <Form.Item
                                         name={"tour_date"}
-                                        label={ <span>{t("form.tourDate")} <span style={{color: 'red'}}>*</span> </span> }
+                                        label={<span>{t("form.tourDate")} <span style={{ color: 'red' }}>*</span> </span>}
                                         rules={[{ required: true, message: t("form.tourDateError") }]}
                                     >
                                         <DatePicker style={{ width: "100%" }} placeholder='' disabledDate={(current) => current && current < dayjs().startOf('day')} />
@@ -273,7 +307,7 @@ const WaiverForm = () => {
                             {isUnderAge && (
                                 <Form.Item
                                     name={"legal_guardian"}
-                                    label={ <span>{t("form.tutorName")} <span style={{color: 'red'}}>*</span> </span> }
+                                    label={<span>{t("form.tutorName")} <span style={{ color: 'red' }}>*</span> </span>}
                                     rules={[{ required: true, message: t("form.tutorNameError") },
                                     { max: 59, message: t("form.max60Characters") }
                                     ]}
@@ -335,16 +369,23 @@ const WaiverForm = () => {
 
 
                             <Form.Item
-                                name={"pregnancy"}
                                 label={t("form.pregnancy")}
                                 style={{ marginTop: '1.5rem' }}
                             >
-                                <InputNumber min={0} max={9} />
+                                <div className='form_na_field'>
+                                    <Form.Item name={"pregnancy"} noStyle>
+                                        <InputNumber min={0} max={9} disabled={isPregnant} />
+                                    </Form.Item>
+
+                                    <Form.Item name={"preg"} valuePropName="checked" noStyle>
+                                        <Checkbox className='na-checkbox'> {t("form.applicable")} </Checkbox>
+                                    </Form.Item>
+                                </div>
                             </Form.Item>
 
 
                             <Form.Item
-                                name={"medications"} 
+                                name={"medications"}
                                 label={t("form.actualMedicines")}
                                 rules={[{ max: 119, message: t("form.max120Characters") }]}
                             >
@@ -356,31 +397,64 @@ const WaiverForm = () => {
 
                                 <Col xs={24} sm={8}>
                                     <Form.Item
-                                        name={"date_medications"}
-                                        label={ <span>{t("form.lastMedicine")} <span style={{color: 'red'}}>*</span> </span> }
-                                        rules={[{ required: true, message: t("form.lastMedicineError") }]}
+                                        label={<span>{t("form.lastMedicine")} <span style={{ color: 'red' }}>*</span> </span>}
+                                        className="form-date-item"
                                     >
-                                        <DatePicker placeholder='' className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} />
+                                        <div className='form_na_field'>
+                                            <Form.Item 
+                                                name={"date_medications"}
+                                                rules={dateMedNA ? [] : [{ required: true, message: t("form.lastMedicineError") }]}
+                                                noStyle
+                                            >
+                                                <DatePicker placeholder='' className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} disabled={dateMedNA} />
+                                            </Form.Item>
+                                            <Form.Item name={"d_med_na"} valuePropName="checked" noStyle>
+                                                <Checkbox className="na-checkbox"> {t("form.applicable")} </Checkbox>
+                                            </Form.Item>
+                                        </div>
+                                    </Form.Item>
+
+                                </Col>
+
+                                <Col xs={24} sm={8}>
+                                    <Form.Item
+                                        label={<span>{t("form.lastMedEx")} <span style={{ color: 'red' }}>*</span> </span>}
+                                        className="form-date-item"
+                                    >
+
+                                        <div className='form_na_field'>
+                                            <Form.Item
+                                                name={"date_examination"}
+                                                rules={dateExamNA ? [] : [{ required: true, message: t("form.lastMedExError") }]}
+                                                noStyle
+                                            >
+                                                <DatePicker placeholder='' className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} disabled={dateExamNA} />
+                                            </Form.Item>
+                                            <Form.Item name={"d_exa_na"} valuePropName="checked" noStyle>
+                                                <Checkbox className="na-checkbox"> {t("form.applicable")} </Checkbox>
+                                            </Form.Item>
+                                        </div>
+
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={8}>
                                     <Form.Item
-                                        name={"date_examination"}
-                                        label={ <span>{t("form.lastMedEx")} <span style={{color: 'red'}}>*</span> </span> }
-                                        rules={[{ required: true, message: t("form.lastMedExError") }]}
+                                        label={<span>{t("form.lastRad")} <span style={{ color: 'red' }}>*</span> </span>}
+                                        className="form-date-item"
                                     >
-                                        <DatePicker placeholder='' className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} />
-                                    </Form.Item>
-                                </Col>
-
-                                <Col xs={24} sm={8}>
-                                    <Form.Item
-                                        name={"date_xray"}
-                                        label={ <span>{t("form.lastRad")} <span style={{color: 'red'}}>*</span> </span> }
-                                        rules={[{ required: true, message: t("form.lastRadError") }]}
-                                    >
-                                        <DatePicker placeholder='' className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} />
+                                        <div className='form_na_field'>
+                                            <Form.Item
+                                                name={"date_xray"}
+                                                rules={dateXrayNA ? [] : [{ required: true, message: t("form.lastRadError") }]}
+                                                noStyle
+                                            >
+                                                <DatePicker placeholder='' className="datepicker" disabledDate={(current) => current && current > dayjs().endOf('day')} disabled={dateXrayNA} />
+                                            </Form.Item>
+                                            <Form.Item name={"d_xray_na"} valuePropName="checked" noStyle>
+                                                <Checkbox className="na-checkbox"> {t("form.applicable")} </Checkbox>
+                                            </Form.Item>
+                                        </div>
                                     </Form.Item>
                                 </Col>
 
@@ -467,8 +541,8 @@ const WaiverForm = () => {
 
                 </Form>
 
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 

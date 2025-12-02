@@ -56,6 +56,7 @@
         "medicalConditionsDesc": "Marque todas las condiciones que apliquen a su historial médico",
         "otherConditions": "Otras Condiciones",
         "pregnancy": "Embarazo (Meses, si aplica)",
+        "applicable": "No aplica",
         "actualMedicines": "Medicinas que toma actualmente",
         "lastMedicine": "Fecha de último medicamento",
         "lastMedicineError": "Ingrese la fecha de su último medicamento",

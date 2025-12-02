@@ -56,6 +56,7 @@
         "medicalConditionsDesc": "Cochez toutes les conditions qui s'appliquent à votre historique médical",
         "otherConditions": "Autres conditions",
         "pregnancy": "Grossesse (mois, si applicable)",
+        "applicable": "Non applicable",
         "actualMedicines": "Médicaments que vous prenez actuellement",
         "lastMedicine": "Date du dernier médicament",
         "lastMedicineError": "Veuillez entrer la date de votre dernier médicament",

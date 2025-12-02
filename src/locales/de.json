@@ -56,6 +56,7 @@
         "medicalConditionsDesc": "Kreuze alle Bedingungen an, die auf deine medizinische Vorgeschichte zutreffen",
         "otherConditions": "Andere Bedingungen",
         "pregnancy": "Schwangerschaft (Monate, falls zutreffend)",
+        "applicable": "Nicht zutreffend",
         "actualMedicines": "Medikamente, die du derzeit einnimmst",
         "lastMedicine": "Datum der letzten Medikamenteneinnahme",
         "lastMedicineError": "Bitte gib das Datum deines letzten Medikaments ein",
