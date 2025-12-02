@@ -1,0 +1,51 @@
+.float-button {
+    position: fixed;
+    left: 1rem;
+    bottom: 1rem;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+.float-button.ant-btn,
+.float-button.ant-btn-icon-only {
+    width: 50px !important;
+    height: 50px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f6c12e;
+    border-color: #f6c12e;
+}
+
+.float-button.ant-btn:hover {
+    background: #f6c12e !important; 
+    border-color: #f6c12e !important;
+    opacity: 0.7;
+}
+
+.float-button svg {
+    font-size: 45px;
+}
+
+
+.lang-dropdown {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.lang-key {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #1f2937;
+}
+
+.lang-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+}

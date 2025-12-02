@@ -7,6 +7,7 @@ import Success from './components/Success'
 import Login from './components/Login'
 import AdminPanel from './components/AdminPanel'
 import './utils/i18n'
+import FloatButton from './components/FloatButton'
 
 
 // URL Backend
@@ -76,6 +77,7 @@ function App() {
 
         <Router>
             <StartOnTop />
+            <FloatButton />
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/terms' element={<Terms />} />
