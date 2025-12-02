@@ -7,7 +7,6 @@ import "../styles/FloatButton.css"
 const FloatButton: React.FC = () => {
 
     const { i18n } = useTranslation()
-    const lang = i18n.language
 
     const items = Languajes.map(l => ({
         key: l.languaje.toLowerCase(),
