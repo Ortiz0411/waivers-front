@@ -121,12 +121,12 @@ This app consumes the **WAIVERS API (Backend)** to:
    # Optional: local development
    # VITE_API_URL=http://localhost:4000
 
-   ->In the code, the API URL is used as: const API_URL = import.meta.env.VITE_API_URL
+   >In the code, the API URL is used as: const API_URL = import.meta.env.VITE_API_URL
 
 4. Development server
    ```bash
    npm run dev
-   ->By default, the app runs on: http://localhost:5173
+   >By default, the app runs on: http://localhost:5173
 
 5. Production build
    ```bash
