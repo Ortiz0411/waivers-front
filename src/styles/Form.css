@@ -199,6 +199,17 @@ button.cleanbutton:hover {
     padding: 1.5rem 1.5rem 0rem;
 }
 
+.form-warning-card .ant-checkbox-inner {
+    width: 1.37rem;
+    height: 1.37rem;
+    border: 1.5px solid #111 !important;
+}
+
+.form-warning-card .ant-checkbox-inner::after {
+    width: 0.5rem;
+    height: 0.75rem;
+}
+
 .form-terms-check .ant-form-item-explain {
     margin: 0 0 0.8rem 2.9rem;
 }
