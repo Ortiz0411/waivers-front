@@ -51,6 +51,7 @@
         "tutorName": "Volledige naam van ouder of voogd",
         "tutorNameError": "Vul de volledige naam van je ouder of voogd in",
         "tourDate": "Toerdatum",
+        "tourToday":"De datum is vandaag",
         "tourDateError": "Vul de datum van je tour in",
         "medicalConditions": "Medische Aandoeningen",
         "medicalConditionsDesc": "Vink alle aandoeningen aan die van toepassing zijn op je medische geschiedenis",

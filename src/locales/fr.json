@@ -51,6 +51,7 @@
         "tutorName": "Nom complet du parent ou tuteur",
         "tutorNameError": "Veuillez entrer le nom complet du parent ou tuteur",
         "tourDate": "Date de l'excursion",
+        "tourToday":"La date est aujourd'hui",
         "tourDateError": "Veuillez entrer la date de votre excursion",
         "medicalConditions": "Conditions médicales",
         "medicalConditionsDesc": "Cochez toutes les conditions qui s'appliquent à votre historique médical",

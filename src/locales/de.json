@@ -51,6 +51,7 @@
         "tutorName": "Vollständiger Name des Elternteils oder gesetzlichen Vertreters",
         "tutorNameError": "Bitte gib den vollständigen Namen des Elternteils oder Vertreters ein",
         "tourDate": "Tour-Datum",
+        "tourToday":"Das Datum ist heute",
         "tourDateError": "Bitte gib das Datum deiner Tour ein",
         "medicalConditions": "Medizinische Bedingungen",
         "medicalConditionsDesc": "Kreuze alle Bedingungen an, die auf deine medizinische Vorgeschichte zutreffen",

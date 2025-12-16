@@ -51,6 +51,7 @@
         "tutorName": "Full Name of Parent or Guardian",
         "tutorNameError": "Please enter the full name of the parent or guardian",
         "tourDate": "Tour Date",
+        "tourToday":"The date is today",
         "tourDateError": "Please enter your tour date",
         "medicalConditions": "Medical Conditions",
         "medicalConditionsDesc": "Check all conditions that apply to your medical history",

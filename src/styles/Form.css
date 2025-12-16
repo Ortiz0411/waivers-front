@@ -115,7 +115,7 @@ body {
 }
 
 .na-checkbox {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 500;
     color: #1f1f1f;
 }
@@ -123,6 +123,8 @@ body {
 .datepicker {
     width: 100%;
 }
+
+
 
 
 /* Form signature */
@@ -248,6 +250,18 @@ button.cleanbutton:hover {
 }
 
 
+.ant-checkbox-inner {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    border: 1.5px solid #807c7c !important;
+}
+
+.ant-checkbox-inner::after {
+    width: 0.5rem;
+    height: 0.75rem;
+}
+
+
 /* Responsive */
 
 @media (max-width: 768px) {
@@ -267,6 +281,21 @@ button.cleanbutton:hover {
     .form-privacy-icon {
         font-size: 3rem;
     }
+
+    .conditions {
+        font-size: 0.95rem;
+        line-height: 1.25;
+    }
+
+    .conditions-grid {
+        row-gap: 0.8rem;
+    }
+
+    .conditions {
+        line-height: 1.4;
+    }
+
+
 }
 
 .form-page input,
@@ -275,5 +304,11 @@ button.cleanbutton:hover {
 .form-page .ant-input,
 .form-page .ant-input-number-input,
 .form-page .ant-picker-input input {
+    font-size: 16px !important;
+}
+
+.form-page .ant-picker,
+.form-page .ant-picker input,
+.form-page .ant-picker-input>input {
     font-size: 16px !important;
 }

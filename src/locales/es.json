@@ -51,6 +51,7 @@
         "tutorName": "Nombre completo del padre o tutor",
         "tutorNameError": "Ingrese el nombre completo del padre o tutor",
         "tourDate": "Fecha del tour",
+        "tourToday":"La fecha es hoy",
         "tourDateError": "Ingrese la fecha de su tour",
         "medicalConditions": "Condiciones Médicas",
         "medicalConditionsDesc": "Marque todas las condiciones que apliquen a su historial médico",
